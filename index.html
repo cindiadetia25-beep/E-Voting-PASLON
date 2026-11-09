@@ -5,22 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>E-Voting OSIS SMPN 1 Rancah</title>
   
-  <!-- Font Google & Custom Moliga -->
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <!-- Font Google Bold Modern -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
   
   <style>
-    @font-face {
-      font-family: 'MOLIGA';
-      src: local('MOLIGA'), local('Moliga'), url('https://fonts.cdnfonts.com/s/94998/Moliga-Regular.woff') format('woff');
-      font-weight: normal;
-      font-style: normal;
-    }
-
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'MOLIGA', 'Press Start 2P', 'Montserrat', cursive, sans-serif !important;
+      font-family: 'Montserrat', sans-serif !important;
+      font-weight: 800 !important;
     }
 
     body {
@@ -66,26 +60,26 @@
 
     .badge-top {
       display: inline-block;
-      padding: 6px 12px;
+      padding: 6px 14px;
       background: #0f172a;
       color: #00f2fe;
       border: 2px solid #00f2fe;
       border-radius: 6px;
-      font-size: clamp(8px, 1.8vw, 11px);
+      font-size: clamp(10px, 1.8vw, 13px);
       margin-bottom: 10px;
       letter-spacing: 1px;
     }
 
     .main-title {
-      font-size: clamp(0.95rem, 2.5vw, 1.4rem);
+      font-size: clamp(1.1rem, 2.5vw, 1.6rem);
       color: #00f2fe;
-      line-height: 1.5;
+      line-height: 1.3;
       text-transform: uppercase;
       letter-spacing: 1px;
     }
 
     .sub-title {
-      font-size: clamp(0.85rem, 2vw, 1.2rem);
+      font-size: clamp(0.95rem, 2vw, 1.3rem);
       color: #38ef7d;
       margin-top: 6px;
       text-transform: uppercase;
@@ -113,7 +107,7 @@
       flex-wrap: wrap;
       justify-content: center;
       gap: 10px;
-      font-size: clamp(10px, 2vw, 13px);
+      font-size: clamp(11px, 2vw, 14px);
     }
 
     .login-box {
@@ -131,7 +125,7 @@
       display: block;
       margin-bottom: 8px;
       color: #00f2fe;
-      font-size: 11px;
+      font-size: 12px;
       line-height: 1.4;
       letter-spacing: 1px;
     }
@@ -142,7 +136,7 @@
       border: 2px solid #00f2fe;
       border-radius: 6px;
       outline: none;
-      font-size: 12px;
+      font-size: 14px;
       background: #0f172a;
       color: #ffffff;
       letter-spacing: 1px;
@@ -157,7 +151,7 @@
       color: #0f172a;
       border: 2px solid #ffffff;
       border-radius: 6px;
-      font-size: 11px;
+      font-size: 12px;
       cursor: pointer;
       transition: 0.2s;
       line-height: 1.4;
@@ -166,6 +160,7 @@
       justify-content: center;
       gap: 6px;
       letter-spacing: 1px;
+      text-transform: uppercase;
     }
 
     .btn:hover {
@@ -182,7 +177,7 @@
     .error-msg {
       color: #ff4d4d;
       margin-top: 12px;
-      font-size: 10px;
+      font-size: 11px;
       background: #450a0a;
       padding: 10px;
       border-radius: 6px;
@@ -196,7 +191,7 @@
       border-radius: 8px;
       border: 2px solid #00f2fe;
       color: #00f2fe;
-      font-size: clamp(10px, 1.8vw, 12px);
+      font-size: clamp(11px, 1.8vw, 13px);
       margin-bottom: 18px;
       line-height: 1.6;
     }
@@ -230,7 +225,7 @@
       padding: 8px;
       border-radius: 6px;
       margin-bottom: 10px;
-      font-size: clamp(11px, 2vw, 13px);
+      font-size: clamp(12px, 2vw, 14px);
       border: 1px solid #00f2fe;
       line-height: 1.3;
       letter-spacing: 1px;
@@ -250,11 +245,11 @@
 
     .visi-misi {
       text-align: left;
-      font-size: 9px;
+      font-size: 11px;
       color: #cbd5e1;
       margin-bottom: 12px;
       background: #1e293b;
-      padding: 8px;
+      padding: 10px;
       border-radius: 6px;
       border: 1px solid #334155;
       max-height: 140px;
@@ -290,14 +285,14 @@
     }
 
     .modal-title {
-      font-size: 12px;
+      font-size: 14px;
       color: #38ef7d;
       margin-bottom: 12px;
       letter-spacing: 1px;
     }
 
     .modal-msg {
-      font-size: 10px;
+      font-size: 12px;
       color: #ffffff;
       margin-bottom: 18px;
       line-height: 1.6;
@@ -313,7 +308,7 @@
       body { padding: 6px; }
       .container { padding: 12px; }
       .card-paslon { flex: 1 1 100%; }
-      .btn { font-size: 10px; padding: 10px; }
+      .btn { font-size: 11px; padding: 10px; }
       .header-logo { width: 35px; height: 35px; }
     }
   </style>
@@ -335,7 +330,7 @@
 
     <!-- Section Login -->
     <div id="loginSection" class="login-box">
-      <p style="margin-bottom: 18px; color: #00f2fe; font-size: 10px; line-height: 1.5;">
+      <p style="margin-bottom: 18px; color: #00f2fe; font-size: 12px; line-height: 1.5;">
         Masukkan NISN Anda
       </p>
       
@@ -361,12 +356,12 @@
         <b>ID:</b> <span id="userNis">-</span>
       </div>
 
-      <h3 style="text-align: center; color: #00f2fe; margin-bottom: 14px; font-size: 12px; letter-spacing: 1px;">
+      <h3 style="text-align: center; color: #00f2fe; margin-bottom: 14px; font-size: 13px; letter-spacing: 1px;">
         PILIH PASLON FAVORIT ANDA
       </h3>
       
       <div class="paslon-container" id="paslonContainer">
-        <p style="text-align:center; width: 100%; color:#00f2fe; font-size: 10px;">Memuat daftar paslon...</p>
+        <p style="text-align:center; width: 100%; color:#00f2fe; font-size: 12px;">Memuat daftar paslon...</p>
       </div>
     </div>
   </div>
@@ -464,7 +459,7 @@
       document.getElementById('loginError').classList.add('hidden');
       document.getElementById('votingSection').classList.add('hidden');
       document.getElementById('loginSection').classList.remove('hidden');
-      document.getElementById('paslonContainer').innerHTML = '<p style="text-align:center; width: 100%; color:#00f2fe; font-size: 10px;">Memuat daftar paslon...</p>';
+      document.getElementById('paslonContainer').innerHTML = '<p style="text-align:center; width: 100%; color:#00f2fe; font-size: 12px;">Memuat daftar paslon...</p>';
     }
 
     function prosesLogin() {
@@ -517,7 +512,7 @@
 
     async function loadPaslonDataForVoting() {
       const container = document.getElementById('paslonContainer');
-      container.innerHTML = '<p style="text-align:center; width: 100%; color:#00f2fe; font-size: 10px;">Memuat daftar paslon...</p>';
+      container.innerHTML = '<p style="text-align:center; width: 100%; color:#00f2fe; font-size: 12px;">Memuat daftar paslon...</p>';
 
       try {
         const res = await fetch(`${SCRIPT_URL}?action=getDashboardEVoting&t=${Date.now()}`, { redirect: 'follow' });
@@ -559,10 +554,10 @@
             container.appendChild(cardDiv);
           });
         } else {
-          container.innerHTML = '<p style="text-align:center; width: 100%; color:#ff4d4d; font-size: 10px;">Belum ada paslon terdaftar.</p>';
+          container.innerHTML = '<p style="text-align:center; width: 100%; color:#ff4d4d; font-size: 12px;">Belum ada paslon terdaftar.</p>';
         }
       } catch (err) {
-        container.innerHTML = '<p style="text-align:center; width: 100%; color:#ff4d4d; font-size: 10px;">Gagal memuat paslon.</p>';
+        container.innerHTML = '<p style="text-align:center; width: 100%; color:#ff4d4d; font-size: 12px;">Gagal memuat paslon.</p>';
       }
     }
 
