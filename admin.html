@@ -507,13 +507,14 @@
         document.getElementById("customAlertModal").style.display = "flex";
     }
 
-    function executeConfirmAction() {
-        closeCustomAlert();
-        if (typeof confirmActionHandler === 'function') {
-            confirmActionHandler();
-        }
+  // Fix: Tambahkan async pada executeConfirmAction agar fetch hapus berjalan lancar
+async function executeConfirmAction() {
+    const actionToRun = confirmActionHandler;
+    closeCustomAlert();
+    if (typeof actionToRun === 'function') {
+        await actionToRun();
     }
-
+}
     function closeCustomAlert() {
         document.getElementById("customAlertModal").style.display = "none";
         confirmActionHandler = null;
@@ -667,63 +668,62 @@
         document.getElementById("btnBatalEdit").classList.add("hidden");
     }
 
-    function deletePaslon(no) {
-        showCustomConfirm(`Apakah Anda yakin ingin menghapus Paslon No. ${no}?`, async function() {
-            showCustomAlert("Sedang menghapus data paslon...", "PROSES SERVER");
+   // Fix: Logika Hapus Paslon Spesifik
+function deletePaslon(no) {
+    if (no === undefined || no === null) return;
+    showCustomConfirm(`Apakah Anda yakin ingin menghapus Paslon No. ${no}?`, async function() {
+        try {
+            const response = await fetch(SCRIPT_URL, {
+                method: "POST",
+                headers: { "Content-Type": "text/plain;charset=utf-8" },
+                body: JSON.stringify({ action: "deletePaslon", no: no.toString() }),
+                redirect: "follow"
+            });
+            const result = await response.json();
             
-            try {
-                const response = await fetch(SCRIPT_URL, {
-                    method: "POST",
-                    headers: { "Content-Type": "text/plain;charset=utf-8" },
-                    body: JSON.stringify({ action: "deletePaslon", no: no }),
-                    redirect: "follow"
-                });
-                const result = await response.json();
-                
-                if (result.success) {
-                    showCustomAlert(`Paslon No. ${no} berhasil dihapus!`, "SUKSES");
-                    loadPaslonData();
-                } else {
-                    showCustomAlert(result.message || "Gagal menghapus paslon.", "ERROR");
-                }
-            } catch (err) {
-                showCustomAlert("Gagal terhubung ke server untuk menghapus paslon.", "ERROR KONEKSI");
+            if (result.success) {
+                showCustomAlert(`Paslon No. ${no} berhasil dihapus!`, "SUKSES");
+                loadPaslonData();
+            } else {
+                showCustomAlert(result.message || "Gagal menghapus paslon.", "ERROR");
             }
-        });
-    }
-
-    function confirmDeleteAllPaslon() {
-        showCustomConfirm("PERINGATAN! Apakah Anda yakin ingin MENGHAPUS SELURUH DATA PASLON?", async function() {
-            showCustomAlert("Sedang menghapus seluruh paslon...", "PROSES SERVER");
-
-            try {
-                const response = await fetch(SCRIPT_URL, {
-                    method: "POST",
-                    headers: { "Content-Type": "text/plain;charset=utf-8" },
-                    body: JSON.stringify({ action: "deleteAllPaslon" }),
-                    redirect: "follow"
-                });
-                const result = await response.json();
-                if(result.success) {
-                    showCustomAlert("Seluruh data paslon berhasil dihapus!", "SUKSES");
-                    loadPaslonData();
-                } else {
-                    showCustomAlert(result.message || "Gagal menghapus data paslon.", "ERROR");
-                }
-            } catch (err) {
-                showCustomAlert("Gagal terhubung ke server untuk menghapus data paslon.", "ERROR KONEKSI");
-            }
-        });
-    }
-
-    function openRealCountModal() {
-        document.getElementById("modalRealCount").style.display = "flex";
-        loadRealCountData();
-        
-        if (!autoUpdateTimer) {
-            autoUpdateTimer = setInterval(loadRealCountData, 2000);
+        } catch (err) {
+            showCustomAlert("Gagal terhubung ke server untuk menghapus paslon.", "ERROR KONEKSI");
         }
+    });
+}
+
+   // Fix: Logika Hapus Semua Paslon
+function confirmDeleteAllPaslon() {
+    showCustomConfirm("PERINGATAN! Apakah Anda yakin ingin MENGHAPUS SELURUH DATA PASLON?", async function() {
+        try {
+            const response = await fetch(SCRIPT_URL, {
+                method: "POST",
+                headers: { "Content-Type": "text/plain;charset=utf-8" },
+                body: JSON.stringify({ action: "deleteAllPaslon" }),
+                redirect: "follow"
+            });
+            const result = await response.json();
+            if (result.success) {
+                showCustomAlert("Seluruh data paslon berhasil dihapus!", "SUKSES");
+                loadPaslonData();
+            } else {
+                showCustomAlert(result.message || "Gagal menghapus data paslon.", "ERROR");
+            }
+        } catch (err) {
+            showCustomAlert("Gagal terhubung ke server untuk menghapus data paslon.", "ERROR KONEKSI");
+        }
+    });
+}
+   // Pastikan interval autoUpdateTimer diatur ke 3000ms (3 detik) agar server Google Apps Script tidak kewalahan
+function openRealCountModal() {
+    document.getElementById("modalRealCount").style.display = "flex";
+    loadRealCountData();
+    
+    if (!autoUpdateTimer) {
+        autoUpdateTimer = setInterval(loadRealCountData, 3000); // Diubah ke 3 detik agar lancar
     }
+}
 
     function closeRealCountModal() {
         document.getElementById("modalRealCount").style.display = "none";
