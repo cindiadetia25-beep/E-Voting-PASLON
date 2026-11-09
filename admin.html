@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Admin E-Voting OSIS SMPN 1 Rancah</title>
+    
+    <!-- Font Google & Custom Moliga -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        @font-face {
+            font-family: 'MOLIGA';
+            src: local('MOLIGA'), local('Moliga'), url('https://fonts.cdnfonts.com/s/94998/Moliga-Regular.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+            font-family: 'MOLIGA', 'Press Start 2P', 'Montserrat', cursive, sans-serif !important; 
+        }
+        
+        body { 
+            background: #0b0f19; 
+            min-height: 100vh; 
+            color: #fff; 
+            padding: 12px; 
+        }
+
+        .container { max-width: 1050px; margin: 0 auto; width: 100%; }
+
+        header { text-align: center; margin-bottom: 20px; }
+        
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 8px;
+        }
+
+        .header-logo {
+            width: 55px;
+            height: 55px;
+            object-fit: contain;
+        }
+
+        header h1 { 
+            color: #00d2ff; 
+            font-size: clamp(1rem, 2.2vw, 1.5rem); 
+            line-height: 1.4;
+            letter-spacing: 1px;
+        }
+        header p { color: #38ef7d; font-size: clamp(0.65rem, 1.2vw, 0.85rem); line-height: 1.5; letter-spacing: 1px; }
+
+        .divider {
+            border: none;
+            height: 3px;
+            background: #00d2ff;
+            box-shadow: 0 0 8px #00d2ff;
+            margin: 18px 0;
+            border-radius: 2px;
+        }
+
+        .clock-box {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #1e293b;
+            border: 2px solid #00d2ff;
+            padding: 6px 12px;
+            border-radius: 6px;
+            color: #00d2ff;
+            font-size: 10px;
+            margin-top: 10px;
+        }
+
+        .card { 
+            background: #1e293b; 
+            border: 2px solid #00d2ff; 
+            border-radius: 10px; 
+            padding: 18px; 
+            margin-bottom: 20px; 
+        }
+
+        .card h2 { 
+            color: #00d2ff; 
+            margin-bottom: 16px; 
+            font-size: clamp(0.8rem, 1.5vw, 1rem); 
+            line-height: 1.4;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            letter-spacing: 1px;
+        }
+
+        .form-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
+            gap: 12px; 
+            margin-bottom: 12px; 
+        }
+        .form-group { margin-bottom: 12px; }
+        .form-group label { 
+            display: block; 
+            margin-bottom: 6px; 
+            color: #00d2ff; 
+            font-size: 9px; 
+            line-height: 1.4;
+            letter-spacing: 1px;
+        }
+        .form-group input, .form-group textarea { 
+            width: 100%; 
+            padding: 10px; 
+            border-radius: 6px; 
+            border: 2px solid #00d2ff; 
+            background: #0f172a; 
+            color: #fff; 
+            font-size: 10px;
+            outline: none;
+        }
+        .form-group textarea { height: 75px; resize: vertical; line-height: 1.4; }
+
+        .btn { 
+            padding: 10px 16px; 
+            border: 2px solid #ffffff; 
+            color: #0f172a; 
+            border-radius: 6px; 
+            cursor: pointer; 
+            font-size: 9px; 
+            display: inline-flex; 
+            align-items: center; 
+            justify-content: center;
+            gap: 8px; 
+            background: #00d2ff;
+            transition: 0.2s;
+            line-height: 1.2;
+            letter-spacing: 1px;
+        }
+        .btn:hover { background: #38ef7d; color: #0f172a; }
+        .btn-realcount { 
+            background: linear-gradient(135deg, #d97706 0%, #fbbf24 100%); 
+            font-size: 10px; 
+            padding: 12px 22px; 
+            color: #000; 
+            font-weight: bold;
+            border: 2px solid #fef08a;
+            box-shadow: 0 0 15px rgba(251, 191, 36, 0.4);
+        }
+        .btn-realcount:hover {
+            background: linear-gradient(135deg, #f59e0b 0%, #fef08a 100%);
+            color: #000;
+        }
+        .btn-danger { background: #ff4d4d; color: #fff; }
+        .btn-warning { background: #ffb703; color: #000; }
+        .btn-secondary { background: #334155; color: #fff; }
+
+        .nav-menu-box {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .table-responsive { width: 100%; overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; min-width: 550px; }
+        th, td { padding: 10px; text-align: left; border-bottom: 1px solid #334155; font-size: 9px; line-height: 1.4; }
+        th { background: #0f172a; color: #00d2ff; }
+
+        .paslon-img-preview {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 6px;
+            border: 2px solid #00d2ff;
+            display: block;
+            margin-top: 6px;
+            background: #000;
+        }
+
+        .img-table { width: 45px; height: 45px; object-fit: cover; border-radius: 6px; border: 1px solid #00d2ff; }
+        .hidden { display: none !important; }
+
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 1000; 
+            left: 0; top: 0;
+            width: 100%; height: 100%; 
+            background-color: rgba(5, 10, 20, 0.96); 
+            backdrop-filter: blur(8px);
+            justify-content: center;
+            align-items: center;
+            padding: 12px;
+        }
+
+        /* DESAIN ELEGANT REAL COUNT PEMILU PRESIDEN */
+        .modal-content-presidential {
+            background: linear-gradient(180deg, #0f172a 0%, #090d16 100%);
+            border: 2px solid #f59e0b;
+            box-shadow: 0 0 35px rgba(245, 158, 11, 0.25), inset 0 0 15px rgba(245, 158, 11, 0.1);
+            border-radius: 16px;
+            width: 100%;
+            max-width: 900px;
+            padding: 24px;
+            max-height: 92vh;
+            overflow-y: auto;
+        }
+
+        .modal-header-presidential {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid rgba(245, 158, 11, 0.4);
+            padding-bottom: 14px;
+            margin-bottom: 18px;
+        }
+
+        .presidential-title {
+            color: #fef08a;
+            font-size: clamp(0.9rem, 1.8vw, 1.2rem);
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .close-modal { color: #f59e0b; font-size: 1.8rem; cursor: pointer; transition: 0.2s; }
+        .close-modal:hover { color: #ff4d4d; }
+
+        .summary-cards-presidential { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 14px; 
+            margin-bottom: 20px; 
+        }
+
+        .summary-card-presidential { 
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            border-left: 4px solid #f59e0b;
+            border-radius: 8px; 
+            padding: 14px; 
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .summary-card-presidential h4 { 
+            font-size: 9px; 
+            color: #cbd5e1; 
+            margin-bottom: 8px; 
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .summary-card-presidential p { 
+            font-size: 1.3rem; 
+            color: #fef08a; 
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .chart-container-presidential { 
+            position: relative; 
+            margin: 20px 0; 
+            padding: 16px; 
+            background: rgba(15, 23, 42, 0.7); 
+            border-radius: 10px; 
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .table-presidential {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 14px;
+        }
+
+        .table-presidential th {
+            background: #1e293b;
+            color: #fef08a;
+            padding: 12px;
+            border-bottom: 2px solid #f59e0b;
+            font-size: 9px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .table-presidential td {
+            background: rgba(15, 23, 42, 0.5);
+            padding: 12px;
+            border-bottom: 1px solid rgba(51, 65, 85, 0.6);
+            font-size: 9.5px;
+        }
+
+        .table-presidential tr:hover td {
+            background: rgba(30, 41, 59, 0.7);
+        }
+
+        .progress-bar-bg {
+            background: #334155;
+            height: 10px;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 4px;
+        }
+
+        .progress-bar-fill {
+            background: linear-gradient(90deg, #d97706 0%, #fef08a 100%);
+            height: 100%;
+            border-radius: 5px;
+            transition: width 0.5s ease-in-out;
+        }
+
+        .action-btns { display: flex; gap: 4px; flex-wrap: wrap; }
+
+        .custom-alert-box {
+            background: #1e293b;
+            border: 3px solid #00d2ff;
+            border-radius: 10px;
+            max-width: 380px;
+            width: 90%;
+            padding: 20px;
+            text-align: center;
+        }
+        .custom-alert-title { color: #00d2ff; font-size: 11px; margin-bottom: 12px; letter-spacing: 1px; }
+        .custom-alert-msg { color: #fff; font-size: 9px; margin-bottom: 16px; line-height: 1.5; }
+        .custom-alert-btns { display: flex; justify-content: center; gap: 8px; }
+
+        @media (max-width: 768px) {
+            body { padding: 8px; }
+            .card { padding: 12px; }
+            .btn { width: 100%; }
+            .action-btns { flex-direction: column; }
+            .header-logo { width: 40px; height: 40px; }
+            .modal-content-presidential { padding: 14px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="header-content">
+            <img src="assets/smp.png" alt="Logo SMP" class="header-logo" onerror="this.style.display='none'">
+            <h1>DASHBOARD ADMIN E-VOTING</h1>
+            <img src="assets/pemilos.png" alt="Logo Pemilos" class="header-logo" onerror="this.style.display='none'">
+        </div>
+        <p>SMPN 1 Rancah - Sistem Pemilihan OSIS</p>
+        <div class="clock-box">
+            <span>⏰</span>
+            <span id="liveClock">--:--:-- WIB</span>
+        </div>
+    </header>
+
+    <hr class="divider">
+
+    <div class="nav-menu-box">
+        <button class="btn btn-realcount" onclick="openRealCountModal()">
+            🏛️ REAL COUNT PEMILU PRESIDEN
+        </button>
+        <button class="btn btn-danger" onclick="confirmDeleteAllPaslon()">
+            🗑️ HAPUS SEMUA PASLON
+        </button>
+    </div>
+
+    <div class="card">
+        <h2>✏️ Kelola Paslon, Visi, Misi & Foto</h2>
+        <form id="formPaslon" onsubmit="savePaslon(event)">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>No. Urut Paslon *</label>
+                    <input type="number" id="paslonNo" min="1" placeholder="Ex: 1" required>
+                </div>
+                <div class="form-group">
+                    <label>Nama Paslon (Ketua & Wakil) *</label>
+                    <input type="text" id="paslonNama" placeholder="Ex: Ahmad & Siti" required>
+                </div>
+                <div class="form-group">
+                    <label>Upload Foto (Opsional)</label>
+                    <input type="file" id="paslonFoto" accept="image/jpeg, image/png" onchange="previewImage(event)">
+                    <img id="imgPreview" class="paslon-img-preview hidden" alt="Preview Foto">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Visi Paslon (Opsional)</label>
+                <textarea id="paslonVisi" placeholder="Tuliskan Visi Paslon..."></textarea>
+            </div>
+            <div class="form-group">
+                <label>Misi Paslon (Opsional)</label>
+                <textarea id="paslonMisi" placeholder="Tuliskan Misi Paslon..."></textarea>
+            </div>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <button type="submit" class="btn" id="btnSimpanPaslon">
+                    💾 Simpan Data Paslon
+                </button>
+                <button type="button" class="btn btn-secondary hidden" id="btnBatalEdit" onclick="batalEdit()">
+                    ✖️ Batal Edit
+                </button>
+            </div>
+        </form>
+
+        <h3 style="color: #00d2ff; margin-top: 20px; margin-bottom: 12px; font-size: 11px; letter-spacing: 1px;">Daftar Paslon Terdaftar</h3>
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Foto</th>
+                        <th>Nama Paslon</th>
+                        <th>Visi</th>
+                        <th>Misi</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="tablePaslonAdmin">
+                    <tr><td colspan="6" style="text-align:center;">Memuat data paslon...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Real Count (Elegan Desain Pemilu Presiden) -->
+<div id="modalRealCount" class="modal">
+    <div class="modal-content-presidential">
+        <div class="modal-header-presidential">
+            <div>
+                <h2 class="presidential-title">
+                    🏛️ HASIL PEROLEHAN SUARA REAL COUNT
+                </h2>
+            </div>
+            <div>
+                <span class="close-modal" onclick="closeRealCountModal()">&times;</span>
+            </div>
+        </div>
+
+        <div class="summary-cards-presidential">
+            <div class="summary-card-presidential">
+                <h4>TOTAL SUARA MASUK</h4>
+                <p id="totalSuaraMasuk">0</p>
+            </div>
+            <div class="summary-card-presidential">
+                <h4>PEMBARUAN TERAKHIR</h4>
+                <p id="lastUpdateTime">--:--:-- WIB</p>
+            </div>
+        </div>
+
+        <div class="chart-container-presidential">
+            <canvas id="realCountChart" style="max-height: 250px;"></canvas>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table-presidential">
+                <thead>
+                    <tr>
+                        <th style="width: 15%;">PASLON</th>
+                        <th style="width: 35%;">NAMA PASLON</th>
+                        <th style="width: 20%;">TOTAL SUARA</th>
+                        <th style="width: 30%;">PERSENTASE SUARA</th>
+                    </tr>
+                </thead>
+                <tbody id="tableHasilVote">
+                    <tr><td colspan="4" style="text-align:center;">Memuat rekap suara...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Custom Modal Pop-Up Admin -->
+<div id="customAlertModal" class="modal">
+    <div class="custom-alert-box">
+        <div class="custom-alert-title" id="customAlertTitle">NOTIFIKASI</div>
+        <div class="custom-alert-msg" id="customAlertMessage">Pesan Notifikasi</div>
+        <div class="custom-alert-btns" id="customAlertBtns">
+            <button class="btn" onclick="closeCustomAlert()">OK</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyBtS1XWR6e8pqbQ-YMeLULrNESwH6VxtlZ786XhBY5Dt7hcxEO56DX5_5bU8lJZr9J/exec";
+    
+    let base64Foto = "";
+    let autoUpdateTimer = null;
+    let realCountChart = null;
+    let paslonCache = [];
+    let confirmActionHandler = null;
+    let isFetchingVote = false;
+
+    function showCustomAlert(msg, title = "SYSTEM INFO") {
+        document.getElementById("customAlertTitle").innerText = title;
+        document.getElementById("customAlertMessage").innerText = msg;
+        document.getElementById("customAlertBtns").innerHTML = `<button class="btn" onclick="closeCustomAlert()">OK</button>`;
+        document.getElementById("customAlertModal").style.display = "flex";
+    }
+
+    function showCustomConfirm(msg, onConfirm, title = "KONFIRMASI") {
+        document.getElementById("customAlertTitle").innerText = title;
+        document.getElementById("customAlertMessage").innerText = msg;
+        confirmActionHandler = onConfirm;
+        document.getElementById("customAlertBtns").innerHTML = `
+            <button class="btn btn-danger" onclick="executeConfirmAction()">YA</button>
+            <button class="btn btn-secondary" onclick="closeCustomAlert()">BATAL</button>
+        `;
+        document.getElementById("customAlertModal").style.display = "flex";
+    }
+
+    function executeConfirmAction() {
+        closeCustomAlert();
+        if (typeof confirmActionHandler === 'function') {
+            confirmActionHandler();
+        }
+    }
+
+    function closeCustomAlert() {
+        document.getElementById("customAlertModal").style.display = "none";
+        confirmActionHandler = null;
+    }
+
+    function updateClock() {
+        const now = new Date();
+        const timeStr = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + " WIB";
+        document.getElementById("liveClock").innerText = timeStr;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    function previewImage(event) {
+        const file = event.target.files[0];
+        if (file) {
+            if (!['image/jpeg', 'image/png', 'image/jpg'].includes(file.type)) {
+                showCustomAlert("Format file harus JPG atau PNG!", "ERROR");
+                event.target.value = "";
+                return;
+            }
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                base64Foto = e.target.result;
+                const imgEl = document.getElementById("imgPreview");
+                imgEl.src = base64Foto;
+                imgEl.classList.remove("hidden");
+            };
+            reader.readAsDataURL(file);
+        } else {
+            if(!base64Foto) {
+                document.getElementById("imgPreview").classList.add("hidden");
+            }
+        }
+    }
+
+    async function savePaslon(e) {
+        e.preventDefault();
+        const btn = document.getElementById("btnSimpanPaslon");
+        btn.innerText = "MENYIMPAN...";
+        btn.disabled = true;
+
+        const no = document.getElementById("paslonNo").value;
+        const nama = document.getElementById("paslonNama").value;
+        const visi = document.getElementById("paslonVisi").value || "-";
+        const misi = document.getElementById("paslonMisi").value || "-";
+
+        try {
+            const res = await fetch(SCRIPT_URL, {
+                method: "POST",
+                headers: { "Content-Type": "text/plain;charset=utf-8" },
+                body: JSON.stringify({ 
+                    action: "savePaslon", 
+                    no: no, 
+                    nama: nama, 
+                    visi: visi, 
+                    misi: misi,
+                    foto: base64Foto 
+                }),
+                redirect: "follow"
+            });
+            const result = await res.json();
+            if(result.success) {
+                showCustomAlert("Data Paslon berhasil disimpan!", "SUKSES");
+                batalEdit();
+                loadPaslonData();
+            } else {
+                showCustomAlert(result.message || "Gagal menyimpan data.", "ERROR");
+            }
+        } catch (err) {
+            showCustomAlert("Gagal terhubung ke server.", "ERROR");
+        } finally {
+            btn.innerHTML = '💾 Simpan Data Paslon';
+            btn.disabled = false;
+        }
+    }
+
+    async function loadPaslonData() {
+        try {
+            const res = await fetch(`${SCRIPT_URL}?action=getDashboardEVoting&t=${Date.now()}`, { redirect: 'follow' });
+            const data = await res.json();
+
+            const tbodyPaslon = document.getElementById("tablePaslonAdmin");
+            tbodyPaslon.innerHTML = "";
+            
+            if (data.paslon && data.paslon.length > 0) {
+                paslonCache = data.paslon;
+                data.paslon.forEach(p => {
+                    const tr = document.createElement("tr");
+                    tr.innerHTML = `
+                        <td><strong>${p.no}</strong></td>
+                        <td><img src="${p.foto || 'https://via.placeholder.com/100?text=Paslon'}" class="img-table"></td>
+                        <td>${p.nama}</td>
+                        <td>${p.visi}</td>
+                        <td>${p.misi ? p.misi.replace(/\n/g, '<br>') : '-'}</td>
+                        <td>
+                            <div class="action-btns">
+                                <button class="btn btn-warning btn-edit-item">✏️ Edit</button>
+                                <button class="btn btn-danger btn-delete-item">🗑️ Hapus</button>
+                            </div>
+                        </td>
+                    `;
+
+                    tr.querySelector('.btn-edit-item').onclick = function() {
+                        editPaslon(p.no);
+                    };
+                    tr.querySelector('.btn-delete-item').onclick = function() {
+                        deletePaslon(p.no);
+                    };
+
+                    tbodyPaslon.appendChild(tr);
+                });
+            } else {
+                paslonCache = [];
+                tbodyPaslon.innerHTML = "<tr><td colspan='6' style='text-align:center;'>Belum ada data paslon.</td></tr>";
+            }
+        } catch (err) {
+            console.error("Error loading paslon data:", err);
+        }
+    }
+
+    function editPaslon(no) {
+        const p = paslonCache.find(item => item.no.toString() === no.toString());
+        if (!p) return;
+
+        document.getElementById("paslonNo").value = p.no;
+        document.getElementById("paslonNama").value = p.nama;
+        document.getElementById("paslonVisi").value = (p.visi !== "-") ? p.visi : "";
+        document.getElementById("paslonMisi").value = (p.misi !== "-") ? p.misi : "";
+
+        if (p.foto) {
+            base64Foto = p.foto;
+            const imgEl = document.getElementById("imgPreview");
+            imgEl.src = base64Foto;
+            imgEl.classList.remove("hidden");
+        } else {
+            base64Foto = "";
+            document.getElementById("imgPreview").classList.add("hidden");
+        }
+
+        document.getElementById("btnSimpanPaslon").innerHTML = '🔄 Update Paslon';
+        document.getElementById("btnBatalEdit").classList.remove("hidden");
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function batalEdit() {
+        document.getElementById("formPaslon").reset();
+        base64Foto = "";
+        document.getElementById("imgPreview").classList.add("hidden");
+        document.getElementById("btnSimpanPaslon").innerHTML = '💾 Simpan Data Paslon';
+        document.getElementById("btnBatalEdit").classList.add("hidden");
+    }
+
+    function deletePaslon(no) {
+        showCustomConfirm(`Apakah Anda yakin ingin menghapus Paslon No. ${no}?`, async function() {
+            showCustomAlert("Sedang menghapus data paslon...", "PROSES SERVER");
+            
+            try {
+                const response = await fetch(SCRIPT_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "text/plain;charset=utf-8" },
+                    body: JSON.stringify({ action: "deletePaslon", no: no }),
+                    redirect: "follow"
+                });
+                const result = await response.json();
+                
+                if (result.success) {
+                    showCustomAlert(`Paslon No. ${no} berhasil dihapus!`, "SUKSES");
+                    loadPaslonData();
+                } else {
+                    showCustomAlert(result.message || "Gagal menghapus paslon.", "ERROR");
+                }
+            } catch (err) {
+                showCustomAlert("Gagal terhubung ke server untuk menghapus paslon.", "ERROR KONEKSI");
+            }
+        });
+    }
+
+    function confirmDeleteAllPaslon() {
+        showCustomConfirm("PERINGATAN! Apakah Anda yakin ingin MENGHAPUS SELURUH DATA PASLON?", async function() {
+            showCustomAlert("Sedang menghapus seluruh paslon...", "PROSES SERVER");
+
+            try {
+                const response = await fetch(SCRIPT_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "text/plain;charset=utf-8" },
+                    body: JSON.stringify({ action: "deleteAllPaslon" }),
+                    redirect: "follow"
+                });
+                const result = await response.json();
+                if(result.success) {
+                    showCustomAlert("Seluruh data paslon berhasil dihapus!", "SUKSES");
+                    loadPaslonData();
+                } else {
+                    showCustomAlert(result.message || "Gagal menghapus data paslon.", "ERROR");
+                }
+            } catch (err) {
+                showCustomAlert("Gagal terhubung ke server untuk menghapus data paslon.", "ERROR KONEKSI");
+            }
+        });
+    }
+
+    function openRealCountModal() {
+        document.getElementById("modalRealCount").style.display = "flex";
+        loadRealCountData();
+        
+        if (!autoUpdateTimer) {
+            autoUpdateTimer = setInterval(loadRealCountData, 2000);
+        }
+    }
+
+    function closeRealCountModal() {
+        document.getElementById("modalRealCount").style.display = "none";
+        if (autoUpdateTimer) {
+            clearInterval(autoUpdateTimer);
+            autoUpdateTimer = null;
+        }
+    }
+
+    function renderChart(labels, dataSuara) {
+        const ctx = document.getElementById('realCountChart').getContext('2d');
+        
+        // Buat gradien emas khas pemilu presiden
+        const gradient = ctx.createLinearGradient(0, 0, 0, 300);
+        gradient.addColorStop(0, '#fef08a');
+        gradient.addColorStop(0.5, '#f59e0b');
+        gradient.addColorStop(1, '#b45309');
+
+        if (realCountChart) {
+            realCountChart.data.labels = labels;
+            realCountChart.data.datasets[0].data = dataSuara;
+            realCountChart.update('none');
+        } else {
+            realCountChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Jumlah Suara',
+                        data: dataSuara,
+                        backgroundColor: gradient,
+                        borderColor: '#fef08a',
+                        borderWidth: 2,
+                        borderRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    animation: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: {
+                            ticks: { color: '#fef08a', font: { family: "'MOLIGA', cursive, sans-serif", size: 10 } },
+                            grid: { display: false }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            ticks: { color: '#fef08a', font: { family: "'MOLIGA', cursive, sans-serif", size: 10 }, stepSize: 1, precision: 0 },
+                            grid: { color: 'rgba(245, 158, 11, 0.15)' }
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    async function loadRealCountData() {
+        if (isFetchingVote) return;
+        isFetchingVote = true;
+
+        try {
+            const res = await fetch(`${SCRIPT_URL}?action=getDashboardEVoting&t=${Date.now()}`, { redirect: 'follow' });
+            const data = await res.json();
+
+            const tbodyVote = document.getElementById("tableHasilVote");
+            tbodyVote.innerHTML = "";
+
+            if (data.hasilVote && data.hasilVote.length > 0) {
+                const labels = [];
+                const dataSuara = [];
+
+                data.hasilVote.forEach(h => {
+                    const formattedLabel = h.no.toString().toUpperCase().includes("PASLON") ? h.no : "PASLON " + h.no;
+                    labels.push(formattedLabel);
+                    dataSuara.push(h.totalSuara);
+
+                    const percentVal = parseFloat(h.persentase) || 0;
+
+                    tbodyVote.innerHTML += `
+                        <tr>
+                            <td><strong>${formattedLabel}</strong></td>
+                            <td><span style="color:#fef08a; font-weight:bold;">${h.nama}</span></td>
+                            <td><span style="font-size:1.1rem; font-weight:bold; color:#38ef7d;">${h.totalSuara}</span> Suara</td>
+                            <td>
+                                <div><strong>${h.persentase}%</strong></div>
+                                <div class="progress-bar-bg">
+                                    <div class="progress-bar-fill" style="width: ${percentVal}%;"></div>
+                                </div>
+                            </td>
+                        </tr>`;
+                });
+
+                document.getElementById("totalSuaraMasuk").innerText = (data.totalSuaraMasuk || 0).toLocaleString('id-ID') + " SUARA";
+                document.getElementById("lastUpdateTime").innerText = new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + " WIB";
+
+                renderChart(labels, dataSuara);
+            } else {
+                tbodyVote.innerHTML = "<tr><td colspan='4' style='text-align:center; color:#cbd5e1;'>Belum ada suara masuk.</td></tr>";
+                renderChart([], []);
+            }
+        } catch (err) {
+            console.error("Gagal mengambil data perolehan suara:", err);
+        } finally {
+            isFetchingVote = false;
+        }
+    }
+
+    loadPaslonData();
+</script>
+
+</body>
+</html>
