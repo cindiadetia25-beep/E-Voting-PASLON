@@ -484,6 +484,7 @@
     
     let base64Foto = "";
     let autoUpdateTimer = null;
+    let modalClockTimer = null;
     let realCountChart = null;
     let paslonCache = [];
     let confirmActionHandler = null;
@@ -718,20 +719,38 @@ function confirmDeleteAllPaslon() {
    // Pastikan interval autoUpdateTimer diatur ke 3000ms (3 detik) agar server Google Apps Script tidak kewalahan
 function openRealCountModal() {
     document.getElementById("modalRealCount").style.display = "flex";
-    loadRealCountData();
     
+    // 1. Jalankan jam modal secara instan & halus setiap 1 detik
+    updateModalClock();
+    if (!modalClockTimer) {
+        modalClockTimer = setInterval(updateModalClock, 1000);
+    }
+    
+    // 2. Ambil data suara pertama kali & atur refresh server tiap 5 detik agar tidak membebani Apps Script
+    loadRealCountData();
     if (!autoUpdateTimer) {
-        autoUpdateTimer = setInterval(loadRealCountData, 3000); // Diubah ke 3 detik agar lancar
+        autoUpdateTimer = setInterval(loadRealCountData, 5000); // 5 detik ideal agar server Google tidak throttling
     }
 }
 
-    function closeRealCountModal() {
-        document.getElementById("modalRealCount").style.display = "none";
-        if (autoUpdateTimer) {
-            clearInterval(autoUpdateTimer);
-            autoUpdateTimer = null;
-        }
+function closeRealCountModal() {
+    document.getElementById("modalRealCount").style.display = "none";
+    if (autoUpdateTimer) {
+        clearInterval(autoUpdateTimer);
+        autoUpdateTimer = null;
     }
+    if (modalClockTimer) {
+        clearInterval(modalClockTimer);
+        modalClockTimer = null;
+    }
+}
+
+function updateModalClock() {
+    const now = new Date();
+    const timeStr = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + " WIB";
+    const el = document.getElementById("lastUpdateTime");
+    if (el) el.innerText = timeStr;
+}
 
     function renderChart(labels, dataSuara) {
         const ctx = document.getElementById('realCountChart').getContext('2d');
@@ -780,57 +799,57 @@ function openRealCountModal() {
         }
     }
 
-    async function loadRealCountData() {
-        if (isFetchingVote) return;
-        isFetchingVote = true;
+ async function loadRealCountData() {
+    if (isFetchingVote) return;
+    isFetchingVote = true;
 
-        try {
-            const res = await fetch(`${SCRIPT_URL}?action=getDashboardEVoting&t=${Date.now()}`, { redirect: 'follow' });
-            const data = await res.json();
+    try {
+        // Menggunakan cache-buster t=Date.now() agar data suara baru langsung ditarik dari spreadsheet
+        const res = await fetch(`${SCRIPT_URL}?action=getDashboardEVoting&t=${Date.now()}`, { redirect: 'follow' });
+        const data = await res.json();
 
-            const tbodyVote = document.getElementById("tableHasilVote");
-            tbodyVote.innerHTML = "";
+        const tbodyVote = document.getElementById("tableHasilVote");
+        
+        if (data.hasilVote && data.hasilVote.length > 0) {
+            const labels = [];
+            const dataSuara = [];
+            let tableHTML = "";
 
-            if (data.hasilVote && data.hasilVote.length > 0) {
-                const labels = [];
-                const dataSuara = [];
+            data.hasilVote.forEach(h => {
+                const formattedLabel = h.no.toString().toUpperCase().includes("PASLON") ? h.no : "PASLON " + h.no;
+                labels.push(formattedLabel);
+                dataSuara.push(h.totalSuara);
 
-                data.hasilVote.forEach(h => {
-                    const formattedLabel = h.no.toString().toUpperCase().includes("PASLON") ? h.no : "PASLON " + h.no;
-                    labels.push(formattedLabel);
-                    dataSuara.push(h.totalSuara);
+                const percentVal = parseFloat(h.persentase) || 0;
 
-                    const percentVal = parseFloat(h.persentase) || 0;
+                tableHTML += `
+                    <tr>
+                        <td><strong>${formattedLabel}</strong></td>
+                        <td><span style="color:#fef08a; font-weight:bold;">${h.nama}</span></td>
+                        <td><span style="font-size:1.1rem; font-weight:bold; color:#38ef7d;">${h.totalSuara}</span> Suara</td>
+                        <td>
+                            <div><strong>${h.persentase}%</strong></div>
+                            <div class="progress-bar-bg">
+                                <div class="progress-bar-fill" style="width: ${percentVal}%;"></div>
+                            </div>
+                        </td>
+                    </tr>`;
+            });
 
-                    tbodyVote.innerHTML += `
-                        <tr>
-                            <td><strong>${formattedLabel}</strong></td>
-                            <td><span style="color:#fef08a; font-weight:bold;">${h.nama}</span></td>
-                            <td><span style="font-size:1.1rem; font-weight:bold; color:#38ef7d;">${h.totalSuara}</span> Suara</td>
-                            <td>
-                                <div><strong>${h.persentase}%</strong></div>
-                                <div class="progress-bar-bg">
-                                    <div class="progress-bar-fill" style="width: ${percentVal}%;"></div>
-                                </div>
-                            </td>
-                        </tr>`;
-                });
+            tbodyVote.innerHTML = tableHTML;
+            document.getElementById("totalSuaraMasuk").innerText = (data.totalSuaraMasuk || 0).toLocaleString('id-ID') + " SUARA";
 
-                document.getElementById("totalSuaraMasuk").innerText = (data.totalSuaraMasuk || 0).toLocaleString('id-ID') + " SUARA";
-                document.getElementById("lastUpdateTime").innerText = new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + " WIB";
-
-                renderChart(labels, dataSuara);
-            } else {
-                tbodyVote.innerHTML = "<tr><td colspan='4' style='text-align:center; color:#cbd5e1;'>Belum ada suara masuk.</td></tr>";
-                renderChart([], []);
-            }
-        } catch (err) {
-            console.error("Gagal mengambil data perolehan suara:", err);
-        } finally {
-            isFetchingVote = false;
+            renderChart(labels, dataSuara);
+        } else {
+            tbodyVote.innerHTML = "<tr><td colspan='4' style='text-align:center; color:#cbd5e1;'>Belum ada suara masuk.</td></tr>";
+            renderChart([], []);
         }
+    } catch (err) {
+        console.error("Gagal mengambil data perolehan suara:", err);
+    } finally {
+        isFetchingVote = false;
     }
-
+}
     loadPaslonData();
 </script>
 
