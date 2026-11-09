@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-Voting OSIS SMPN 1 Rancah</title>
+  
+  <!-- Font Google & Custom Moliga -->
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    @font-face {
+      font-family: 'MOLIGA';
+      src: local('MOLIGA'), local('Moliga'), url('https://fonts.cdnfonts.com/s/94998/Moliga-Regular.woff') format('woff');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'MOLIGA', 'Press Start 2P', 'Montserrat', cursive, sans-serif !important;
+    }
+
+    body {
+      min-height: 100vh;
+      background: #0f172a;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 12px;
+      color: #f8fafc;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 900px;
+      background: #1e293b;
+      padding: clamp(15px, 3vw, 25px);
+      border-radius: 12px;
+      border: 3px solid #00f2fe;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    }
+
+    .hidden { display: none !important; }
+
+    .header-title {
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 6px;
+    }
+
+    .header-logo {
+      width: 50px;
+      height: 50px;
+      object-fit: contain;
+    }
+
+    .badge-top {
+      display: inline-block;
+      padding: 6px 12px;
+      background: #0f172a;
+      color: #00f2fe;
+      border: 2px solid #00f2fe;
+      border-radius: 6px;
+      font-size: clamp(8px, 1.8vw, 11px);
+      margin-bottom: 10px;
+      letter-spacing: 1px;
+    }
+
+    .main-title {
+      font-size: clamp(0.95rem, 2.5vw, 1.4rem);
+      color: #00f2fe;
+      line-height: 1.5;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .sub-title {
+      font-size: clamp(0.85rem, 2vw, 1.2rem);
+      color: #38ef7d;
+      margin-top: 6px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .divider {
+      border: none;
+      height: 3px;
+      background: #00f2fe;
+      box-shadow: 0 0 8px #00f2fe;
+      margin: 18px 0;
+      border-radius: 2px;
+    }
+
+    .clock-card {
+      background: #0f172a;
+      border: 2px solid #00f2fe;
+      color: #00f2fe;
+      padding: 10px;
+      border-radius: 8px;
+      text-align: center;
+      margin-bottom: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      font-size: clamp(10px, 2vw, 13px);
+    }
+
+    .login-box {
+      max-width: 420px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .input-group {
+      margin-bottom: 18px;
+      text-align: left;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #00f2fe;
+      font-size: 11px;
+      line-height: 1.4;
+      letter-spacing: 1px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #00f2fe;
+      border-radius: 6px;
+      outline: none;
+      font-size: 12px;
+      background: #0f172a;
+      color: #ffffff;
+      letter-spacing: 1px;
+    }
+
+    input[type="text"]:focus { border-color: #38ef7d; }
+
+    .btn {
+      width: 100%;
+      padding: 12px;
+      background: #00f2fe;
+      color: #0f172a;
+      border: 2px solid #ffffff;
+      border-radius: 6px;
+      font-size: 11px;
+      cursor: pointer;
+      transition: 0.2s;
+      line-height: 1.4;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      letter-spacing: 1px;
+    }
+
+    .btn:hover {
+      background: #38ef7d;
+      color: #0f172a;
+    }
+
+    .btn-secondary {
+      background: #334155;
+      border: 2px solid #94a3b8;
+      color: #ffffff;
+    }
+
+    .error-msg {
+      color: #ff4d4d;
+      margin-top: 12px;
+      font-size: 10px;
+      background: #450a0a;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ff4d4d;
+      line-height: 1.4;
+    }
+
+    .user-info {
+      background: #0f172a;
+      padding: 12px;
+      border-radius: 8px;
+      border: 2px solid #00f2fe;
+      color: #00f2fe;
+      font-size: clamp(10px, 1.8vw, 12px);
+      margin-bottom: 18px;
+      line-height: 1.6;
+    }
+
+    .user-info span { color: #ffffff; }
+
+    .paslon-container {
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+      gap: 15px;
+      width: 100%;
+      flex-wrap: wrap;
+    }
+
+    .card-paslon {
+      flex: 1 1 260px;
+      background: #0f172a;
+      border: 2px solid #00f2fe;
+      border-radius: 10px;
+      padding: 12px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .paslon-header {
+      background: #1e293b;
+      color: #00f2fe;
+      padding: 8px;
+      border-radius: 6px;
+      margin-bottom: 10px;
+      font-size: clamp(11px, 2vw, 13px);
+      border: 1px solid #00f2fe;
+      line-height: 1.3;
+      letter-spacing: 1px;
+    }
+
+    .paslon-img {
+      width: 100%;
+      max-width: 200px;
+      height: 220px;
+      object-fit: contain;
+      object-position: center;
+      border-radius: 8px;
+      display: block;
+      margin: 0 auto 12px auto;
+      background-color: transparent;
+    }
+
+    .visi-misi {
+      text-align: left;
+      font-size: 9px;
+      color: #cbd5e1;
+      margin-bottom: 12px;
+      background: #1e293b;
+      padding: 8px;
+      border-radius: 6px;
+      border: 1px solid #334155;
+      max-height: 140px;
+      overflow-y: auto;
+      line-height: 1.5;
+    }
+
+    .visi-misi h4 {
+      color: #38ef7d;
+      margin-bottom: 4px;
+    }
+
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(15, 23, 42, 0.95);
+      z-index: 1000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 15px;
+    }
+
+    .custom-modal-box {
+      background: #1e293b;
+      border: 3px solid #00f2fe;
+      border-radius: 10px;
+      max-width: 400px;
+      width: 100%;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .modal-title {
+      font-size: 12px;
+      color: #38ef7d;
+      margin-bottom: 12px;
+      letter-spacing: 1px;
+    }
+
+    .modal-msg {
+      font-size: 10px;
+      color: #ffffff;
+      margin-bottom: 18px;
+      line-height: 1.6;
+    }
+
+    .modal-btns {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    @media (max-width: 600px) {
+      body { padding: 6px; }
+      .container { padding: 12px; }
+      .card-paslon { flex: 1 1 100%; }
+      .btn { font-size: 10px; padding: 10px; }
+      .header-logo { width: 35px; height: 35px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="header-title">
+      <span class="badge-top">E - VOTING RESMI</span>
+      <div class="header-content">
+        <img src="assets/smp.png" alt="Logo SMP" class="header-logo">
+        <h1 class="main-title">E-VOTING PEMILIHAN KETUA OSIS</h1>
+        <img src="assets/pemilos.png" alt="Logo Pemilos" class="header-logo">
+      </div>
+      <h2 class="sub-title">SMPN 1 RANCAH</h2>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Section Login -->
+    <div id="loginSection" class="login-box">
+      <p style="margin-bottom: 18px; color: #00f2fe; font-size: 10px; line-height: 1.5;">
+        Masukkan NISN Anda
+      </p>
+      
+      <div class="input-group">
+        <label for="nisInput" style="text-align: center; display: block; width: 100%; margin-bottom: 8px;">NISN</label>
+        <input type="text" id="nisInput" placeholder="Ketik NISN" autocomplete="off">
+      </div>
+      
+      <button class="btn" id="btnLogin" onclick="prosesLogin()">🚀 MASUK SYSTEM</button>
+      <div id="loginError" class="error-msg hidden"></div>
+    </div>
+
+    <!-- Section Voting Paslon -->
+    <div id="votingSection" class="hidden">
+      <div class="clock-card">
+        <span>📅 <span id="clockDate">Memuat tanggal...</span></span>
+        <span>|</span>
+        <span>⏰ <span id="clockTime">00:00:00 WIB</span></span>
+      </div>
+
+      <div class="user-info">
+        <b>Pemilih:</b> <span id="userName">-</span> | <b>Status:</b> <span id="userKelas">-</span><br>
+        <b>ID:</b> <span id="userNis">-</span>
+      </div>
+
+      <h3 style="text-align: center; color: #00f2fe; margin-bottom: 14px; font-size: 12px; letter-spacing: 1px;">
+        PILIH PASLON FAVORIT ANDA
+      </h3>
+      
+      <div class="paslon-container" id="paslonContainer">
+        <p style="text-align:center; width: 100%; color:#00f2fe; font-size: 10px;">Memuat daftar paslon...</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Custom Pop-Up Modal -->
+  <div id="customModal" class="modal-overlay hidden">
+    <div class="custom-modal-box">
+      <div id="modalTitle" class="modal-title">KONFIRMASI</div>
+      <div id="modalMsg" class="modal-msg">Pesan Notifikasi</div>
+      <div id="modalBtns" class="modal-btns">
+        <button class="btn" onclick="closeCustomModal()">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyBtS1XWR6e8pqbQ-YMeLULrNESwH6VxtlZ786XhBY5Dt7hcxEO56DX5_5bU8lJZr9J/exec";
+
+    let currentNis = "";
+    let currentNama = "";
+    let currentRole = "SISWA";
+
+    function showCustomAlert(msg, title = "PEMBERITAHUAN", callbackOnClose = null) {
+      document.getElementById('modalTitle').innerText = title;
+      document.getElementById('modalMsg').innerText = msg;
+      
+      const btnContainer = document.getElementById('modalBtns');
+      btnContainer.innerHTML = '';
+
+      const btnOk = document.createElement('button');
+      btnOk.className = 'btn';
+      btnOk.innerText = 'OK';
+      btnOk.onclick = function() {
+        closeCustomModal();
+        if (callbackOnClose && typeof callbackOnClose === 'function') {
+          callbackOnClose();
+        }
+      };
+
+      btnContainer.appendChild(btnOk);
+      document.getElementById('customModal').classList.remove('hidden');
+    }
+
+    function showCustomConfirm(msg, onConfirm, title = "KONFIRMASI PILIHAN") {
+      document.getElementById('modalTitle').innerText = title;
+      document.getElementById('modalMsg').innerText = msg;
+      
+      const btnContainer = document.getElementById('modalBtns');
+      btnContainer.innerHTML = '';
+
+      const btnYa = document.createElement('button');
+      btnYa.className = 'btn';
+      btnYa.innerText = '✅ YA, PILIH';
+      btnYa.onclick = function() {
+        closeCustomModal();
+        if (typeof onConfirm === 'function') {
+          onConfirm();
+        }
+      };
+
+      const btnBatal = document.createElement('button');
+      btnBatal.className = 'btn btn-secondary';
+      btnBatal.innerText = '✖️ BATAL';
+      btnBatal.onclick = function() {
+        closeCustomModal();
+      };
+
+      btnContainer.appendChild(btnYa);
+      btnContainer.appendChild(btnBatal);
+      document.getElementById('customModal').classList.remove('hidden');
+    }
+
+    function closeCustomModal() {
+      document.getElementById('customModal').classList.add('hidden');
+    }
+
+    function updateClock() {
+      const now = new Date();
+      const optionsDate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      document.getElementById('clockDate').innerText = now.toLocaleDateString('id-ID', optionsDate);
+      
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+      document.getElementById('clockTime').innerText = `${hours}:${minutes}:${seconds} WIB`;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    function resetToHome() {
+      currentNis = "";
+      currentNama = "";
+      currentRole = "SISWA";
+      document.getElementById('nisInput').value = "";
+      document.getElementById('loginError').classList.add('hidden');
+      document.getElementById('votingSection').classList.add('hidden');
+      document.getElementById('loginSection').classList.remove('hidden');
+      document.getElementById('paslonContainer').innerHTML = '<p style="text-align:center; width: 100%; color:#00f2fe; font-size: 10px;">Memuat daftar paslon...</p>';
+    }
+
+    function prosesLogin() {
+      const nis = document.getElementById('nisInput').value.trim();
+      const errorDiv = document.getElementById('loginError');
+      const btnLogin = document.getElementById('btnLogin');
+      
+      errorDiv.innerText = "";
+      errorDiv.classList.add('hidden');
+
+      if (!nis) {
+        errorDiv.innerText = "NISN / Nama tidak boleh kosong!";
+        errorDiv.classList.remove('hidden');
+        return;
+      }
+
+      btnLogin.innerText = "⏳ MEMERIKSA...";
+      btnLogin.disabled = true;
+
+      fetch(`${SCRIPT_URL}?action=verifikasi&nis=${encodeURIComponent(nis)}&t=${Date.now()}`, { redirect: 'follow' })
+        .then(res => res.json())
+        .then(response => {
+          if (response.success) {
+            currentNis = response.identityKey || nis;
+            currentNama = response.nama; 
+            currentRole = response.role || "SISWA";
+
+            document.getElementById('loginSection').classList.add('hidden');
+            document.getElementById('votingSection').classList.remove('hidden');
+            
+            document.getElementById('userName').innerText = response.nama;
+            document.getElementById('userKelas').innerText = response.kelas;
+            document.getElementById('userNis').innerText = currentNis || "-";
+
+            loadPaslonDataForVoting();
+          } else {
+            btnLogin.innerText = "🚀 MASUK SYSTEM";
+            btnLogin.disabled = false;
+            errorDiv.innerText = response.message;
+            errorDiv.classList.remove('hidden');
+          }
+        })
+        .catch(() => {
+          btnLogin.innerText = "🚀 MASUK SYSTEM";
+          btnLogin.disabled = false;
+          errorDiv.innerText = "Gagal terhubung ke server!";
+          errorDiv.classList.remove('hidden');
+        });
+    }
+
+    async function loadPaslonDataForVoting() {
+      const container = document.getElementById('paslonContainer');
+      container.innerHTML = '<p style="text-align:center; width: 100%; color:#00f2fe; font-size: 10px;">Memuat daftar paslon...</p>';
+
+      try {
+        const res = await fetch(`${SCRIPT_URL}?action=getDashboardEVoting&t=${Date.now()}`, { redirect: 'follow' });
+        const data = await res.json();
+
+        container.innerHTML = "";
+        if (data.paslon && data.paslon.length > 0) {
+          data.paslon.forEach((p) => {
+            const numFormatted = parseInt(p.no) < 10 ? "0" + parseInt(p.no) : p.no;
+            const fotoUrl = p.foto && p.foto !== "" ? p.foto : 'https://via.placeholder.com/300x300?text=Paslon+' + p.no;
+            const formattedMisi = p.misi ? p.misi.replace(/\n/g, '<br>') : '-';
+            
+            const cardDiv = document.createElement('div');
+            cardDiv.className = 'card-paslon';
+            
+            const paslonHeader = document.createElement('div');
+            paslonHeader.className = 'paslon-header';
+            paslonHeader.textContent = p.nama;
+
+            cardDiv.innerHTML = `
+              <div>
+                ${paslonHeader.outerHTML}
+                <img src="${fotoUrl}" alt="Paslon ${p.no}" class="paslon-img">
+                <div class="visi-misi">
+                  <h4>Visi:</h4>
+                  <p>${p.visi}</p>
+                  <h4 style="margin-top: 6px;">Misi:</h4>
+                  <p>${formattedMisi}</p>
+                </div>
+              </div>
+              <button class="btn btn-pilih">🗳️ PILIH PASLON ${numFormatted}</button>
+            `;
+
+            const btnPilih = cardDiv.querySelector('.btn-pilih');
+            btnPilih.onclick = function() {
+              prosesSimpanSuara(p.nama, 'PASLON ' + numFormatted);
+            };
+
+            container.appendChild(cardDiv);
+          });
+        } else {
+          container.innerHTML = '<p style="text-align:center; width: 100%; color:#ff4d4d; font-size: 10px;">Belum ada paslon terdaftar.</p>';
+        }
+      } catch (err) {
+        container.innerHTML = '<p style="text-align:center; width: 100%; color:#ff4d4d; font-size: 10px;">Gagal memuat paslon.</p>';
+      }
+    }
+
+    function prosesSimpanSuara(namaPaslon, labelPaslon) {
+      showCustomConfirm("Apakah Anda yakin memilih " + labelPaslon + " (" + namaPaslon + ")?", function() {
+
+        let nisKirim = (currentRole === "GURU") ? "" : currentNis;
+
+        const queryUrl = `${SCRIPT_URL}?action=simpan` +
+          `&nis=${encodeURIComponent(nisKirim)}` +
+          `&nama=${encodeURIComponent(currentNama)}` +
+          `&pilihan=${encodeURIComponent(namaPaslon)}` +
+          `&role=${encodeURIComponent(currentRole)}` +
+          `&t=${Date.now()}`;
+
+        fetch(queryUrl, { method: "GET", redirect: "follow" })
+          .then(res => res.json())
+          .then(response => {
+            if (response.success) {
+              showCustomAlert("Terima kasih! Suara Anda telah berhasil disimpan.", "SUKSES MEMILIH", function() {
+                resetToHome();
+              });
+            } else {
+              showCustomAlert(response.message || "Gagal menyimpan suara.", "PERINGATAN", function() {
+                resetToHome();
+              });
+            }
+          })
+          .catch(() => {
+            showCustomAlert("Terjadi kesalahan koneksi saat menyimpan suara.", "ERROR KONEKSI", function() {
+              resetToHome();
+            });
+          });
+      });
+    }
+  </script>
+</body>
+</html>
