@@ -219,44 +219,49 @@
       justify-content: space-between;
     }
 
+   /* 1. Nama Paslon fleksibel agar tidak terpotong */
     .paslon-header {
       background: #1e293b;
       color: #00f2fe;
-      padding: 8px;
+      padding: 10px;
       border-radius: 6px;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
       font-size: clamp(12px, 2vw, 14px);
       border: 1px solid #00f2fe;
-      line-height: 1.3;
-      letter-spacing: 1px;
+      line-height: 1.4;
+      letter-spacing: 0.5px;
+      word-wrap: break-word;       /* Agar nama panjang otomatis turun ke bawah */
+      white-space: normal;
     }
 
+    /* 2. Foto Paslon lebih besar & utuh */
     .paslon-img {
       width: 100%;
-      max-width: 200px;
-      height: 220px;
-      object-fit: contain;
+      max-width: 260px;            /* Diperbesar dari 200px */
+      height: 280px;               /* Diperbesar dari 220px */
+      object-fit: contain;         /* Menjaga foto utuh & tidak terpotong */
       object-position: center;
       border-radius: 8px;
       display: block;
-      margin: 0 auto 12px auto;
+      margin: 0 auto 14px auto;
       background-color: transparent;
     }
 
+    /* 3. Visi Misi tampil utuh tanpa scrollbar */
     .visi-misi {
       text-align: left;
       font-size: 11px;
       color: #cbd5e1;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
       background: #1e293b;
-      padding: 10px;
+      padding: 12px;
       border-radius: 6px;
       border: 1px solid #334155;
-      max-height: 140px;
-      overflow-y: auto;
+      max-height: none !important; /* Hapus batas tinggi */
+      overflow-y: visible !important; /* Hilangkan scrollbar */
       line-height: 1.5;
     }
-
+    
     .visi-misi h4 {
       color: #38ef7d;
       margin-bottom: 4px;
@@ -378,7 +383,7 @@
   </div>
 
   <script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyBtS1XWR6e8pqbQ-YMeLULrNESwH6VxtlZ786XhBY5Dt7hcxEO56DX5_5bU8lJZr9J/exec";
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyfb70IU_3Gl0SonFb76SViVA9z-jiwi9Y9T_a0-CWrohAQuRwSizXdObBA2CKfAF4/exec";
 
     let currentNis = "";
     let currentNama = "";
@@ -451,64 +456,74 @@
     setInterval(updateClock, 1000);
     updateClock();
 
-    function resetToHome() {
+   function resetToHome() {
       currentNis = "";
       currentNama = "";
       currentRole = "SISWA";
       document.getElementById('nisInput').value = "";
+      
+      // RESET TEKS & STATUS TOMBOL LOGIN KE AWAL
+      const btnLogin = document.getElementById('btnLogin');
+      if (btnLogin) {
+        btnLogin.innerText = "🚀 MASUK SYSTEM";
+        btnLogin.disabled = false;
+      }
+
       document.getElementById('loginError').classList.add('hidden');
       document.getElementById('votingSection').classList.add('hidden');
       document.getElementById('loginSection').classList.remove('hidden');
       document.getElementById('paslonContainer').innerHTML = '<p style="text-align:center; width: 100%; color:#00f2fe; font-size: 12px;">Memuat daftar paslon...</p>';
     }
 
-    function prosesLogin() {
-      const nis = document.getElementById('nisInput').value.trim();
-      const errorDiv = document.getElementById('loginError');
-      const btnLogin = document.getElementById('btnLogin');
-      
-      errorDiv.innerText = "";
-      errorDiv.classList.add('hidden');
+function prosesLogin() {
+  const nis = document.getElementById('nisInput').value.trim();
+  const errorDiv = document.getElementById('loginError');
+  const btnLogin = document.getElementById('btnLogin');
+  
+  errorDiv.innerText = "";
+  errorDiv.classList.add('hidden');
 
-      if (!nis) {
-        errorDiv.innerText = "NISN / Nama tidak boleh kosong!";
+  if (!nis) {
+    errorDiv.innerText = "NISN / Nama tidak boleh kosong!";
+    errorDiv.classList.remove('hidden');
+    return;
+  }
+
+  // Respon instan dalam 1 kali klik (0.01 detik)
+  btnLogin.innerText = "⏳ MEMERIKSA...";
+  btnLogin.disabled = true;
+
+  fetch(`${SCRIPT_URL}?action=verifikasi&nis=${encodeURIComponent(nis)}&t=${Date.now()}`, { redirect: 'follow' })
+    .then(res => res.json())
+    .then(response => {
+      if (response.success) {
+        currentNis = response.identityKey || nis;
+        currentNama = response.nama; 
+        currentRole = response.role || "SISWA";
+
+        // Sembunyikan layar Login dan tampilkan Layar Voting Seketika
+        document.getElementById('loginSection').classList.add('hidden');
+        document.getElementById('votingSection').classList.remove('hidden');
+        
+        document.getElementById('userName').innerText = response.nama;
+        document.getElementById('userKelas').innerText = response.kelas;
+        document.getElementById('userNis').innerText = currentNis || "-";
+
+        loadPaslonDataForVoting();
+      } else {
+        btnLogin.innerText = "🚀 MASUK SYSTEM";
+        btnLogin.disabled = false;
+        errorDiv.innerText = response.message;
         errorDiv.classList.remove('hidden');
-        return;
       }
-
-      btnLogin.innerText = "⏳ MEMERIKSA...";
-      btnLogin.disabled = true;
-
-      fetch(`${SCRIPT_URL}?action=verifikasi&nis=${encodeURIComponent(nis)}&t=${Date.now()}`, { redirect: 'follow' })
-        .then(res => res.json())
-        .then(response => {
-          if (response.success) {
-            currentNis = response.identityKey || nis;
-            currentNama = response.nama; 
-            currentRole = response.role || "SISWA";
-
-            document.getElementById('loginSection').classList.add('hidden');
-            document.getElementById('votingSection').classList.remove('hidden');
-            
-            document.getElementById('userName').innerText = response.nama;
-            document.getElementById('userKelas').innerText = response.kelas;
-            document.getElementById('userNis').innerText = currentNis || "-";
-
-            loadPaslonDataForVoting();
-          } else {
-            btnLogin.innerText = "🚀 MASUK SYSTEM";
-            btnLogin.disabled = false;
-            errorDiv.innerText = response.message;
-            errorDiv.classList.remove('hidden');
-          }
-        })
-        .catch(() => {
-          btnLogin.innerText = "🚀 MASUK SYSTEM";
-          btnLogin.disabled = false;
-          errorDiv.innerText = "Gagal terhubung ke server!";
-          errorDiv.classList.remove('hidden');
-        });
-    }
+    })
+    .catch(() => {
+      btnLogin.innerText = "🚀 MASUK SYSTEM";
+      btnLogin.disabled = false;
+      errorDiv.innerText = "Gagal terhubung ke server!";
+      errorDiv.classList.remove('hidden');
+    });
+}
 
     async function loadPaslonDataForVoting() {
       const container = document.getElementById('paslonContainer');
@@ -561,38 +576,38 @@
       }
     }
 
-    function prosesSimpanSuara(namaPaslon, labelPaslon) {
-      showCustomConfirm("Apakah Anda yakin memilih " + labelPaslon + " (" + namaPaslon + ")?", function() {
+function prosesSimpanSuara(namaPaslon, labelPaslon) {
+  showCustomConfirm("Apakah Anda yakin memilih " + labelPaslon + " (" + namaPaslon + ")?", function() {
+    let nisKirim = (currentRole === "GURU") ? "" : currentNis;
 
-        let nisKirim = (currentRole === "GURU") ? "" : currentNis;
+    const queryUrl = `${SCRIPT_URL}?action=simpan` +
+      `&nis=${encodeURIComponent(nisKirim)}` +
+      `&nama=${encodeURIComponent(currentNama)}` +
+      `&pilihan=${encodeURIComponent(namaPaslon)}` +
+      `&role=${encodeURIComponent(currentRole)}` +
+      `&t=${Date.now()}`;
 
-        const queryUrl = `${SCRIPT_URL}?action=simpan` +
-          `&nis=${encodeURIComponent(nisKirim)}` +
-          `&nama=${encodeURIComponent(currentNama)}` +
-          `&pilihan=${encodeURIComponent(namaPaslon)}` +
-          `&role=${encodeURIComponent(currentRole)}` +
-          `&t=${Date.now()}`;
-
-        fetch(queryUrl, { method: "GET", redirect: "follow" })
-          .then(res => res.json())
-          .then(response => {
-            if (response.success) {
-              showCustomAlert("Terima kasih! Suara Anda telah berhasil disimpan.", "SUKSES MEMILIH", function() {
-                resetToHome();
-              });
-            } else {
-              showCustomAlert(response.message || "Gagal menyimpan suara.", "PERINGATAN", function() {
-                resetToHome();
-              });
-            }
-          })
-          .catch(() => {
-            showCustomAlert("Terjadi kesalahan koneksi saat menyimpan suara.", "ERROR KONEKSI", function() {
-              resetToHome();
-            });
+    // Eksekusi pengiriman instan
+    fetch(queryUrl, { method: "GET", redirect: "follow" })
+      .then(res => res.json())
+      .then(response => {
+        if (response.success) {
+          showCustomAlert("Terima kasih! Suara Anda telah berhasil disimpan.", "SUKSES MEMILIH", function() {
+            resetToHome();
           });
+        } else {
+          showCustomAlert(response.message || "Gagal menyimpan suara.", "PERINGATAN", function() {
+            resetToHome();
+          });
+        }
+      })
+      .catch(() => {
+        showCustomAlert("Terjadi kesalahan koneksi saat menyimpan suara.", "ERROR KONEKSI", function() {
+          resetToHome();
+        });
       });
-    }
+  });
+}
   </script>
 </body>
 </html>
