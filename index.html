@@ -9,6 +9,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
   
   <style>
+    /* ==========================================================================
+       1. STYLING DASAR & RESET
+       ========================================================================== */
     * {
       box-sizing: border-box;
       margin: 0;
@@ -27,6 +30,12 @@
       color: #f8fafc;
     }
 
+    /* Utilitas Penyembunyi Elemen */
+    .hidden { display: none !important; }
+
+    /* ==========================================================================
+       2. LAYOUT UTAMA CONTAINER & HEADER APPLIKASI
+       ========================================================================== */
     .container {
       width: 100%;
       max-width: 900px;
@@ -36,8 +45,6 @@
       border: 3px solid #00f2fe;
       box-shadow: 0 10px 25px rgba(0,0,0,0.5);
     }
-
-    .hidden { display: none !important; }
 
     .header-title {
       text-align: center;
@@ -95,6 +102,9 @@
       border-radius: 2px;
     }
 
+    /* ==========================================================================
+       3. JAM DIGITAL & FORM LOGIN
+       ========================================================================== */
     .clock-card {
       background: #0f172a;
       border: 2px solid #00f2fe;
@@ -144,6 +154,9 @@
 
     input[type="text"]:focus { border-color: #38ef7d; }
 
+    /* ==========================================================================
+       4. ELEMEN TOMBOL & DEKORASI PEMBERITAHUAN ERROR
+       ========================================================================== */
     .btn {
       width: 100%;
       padding: 12px;
@@ -185,6 +198,9 @@
       line-height: 1.4;
     }
 
+    /* ==========================================================================
+       5. INFORMASI PEMILIH AKTIFF
+       ========================================================================== */
     .user-info {
       background: #0f172a;
       padding: 12px;
@@ -198,97 +214,103 @@
 
     .user-info span { color: #ffffff; }
 
-/* 1. Kontainer Paslon (Wajib Grid 3 Kolom Sejajar) */
-.paslon-container, #paslonContainer, .paslon-grid, .-container {
-  display: grid !important;
-  grid-template-columns: repeat(3, 1fr) !important;
-  gap: 16px !important;
-  width: 100% !important;
-  align-items: stretch;
-}
+    /* ==========================================================================
+       6. TATA LETAK GRID & KARTU PASLON
+       ========================================================================== */
+    /* Kontainer Grid 3 Kolom Sejajar Paslon */
+    .paslon-container, #paslonContainer, .paslon-grid, .-container {
+      display: grid !important;
+      grid-template-columns: repeat(3, 1fr) !important;
+      gap: 16px !important;
+      width: 100% !important;
+      align-items: stretch;
+    }
 
-/* 2. Kartu Paslon Flexbox */
-.card-paslon {
-  background: #0f172a;
-  border: 2px solid #00f2fe;
-  border-radius: 12px;
-  padding: 14px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  box-shadow: 0 0 15px rgba(0, 242, 254, 0.15);
-  height: 100%;
-}
-    
-/* Header Nama Paslon - Glowing Neon, Presisi 2 Baris & Anti Terpotong */
-  .paslon-header {
-    background: #1e293b !important;
-    color: #00f2fe !important;
-    padding: 10px 6px !important;
-    border-radius: 8px !important;
-    margin-bottom: 12px !important;
-    font-size: clamp(10px, 0.95vw, 12px) !important;
-    border: 1px solid #00f2fe !important;
-    box-shadow: 0 0 10px rgba(0, 242, 254, 0.35) !important;
-    line-height: 1.4 !important;
-    text-align: center !important;
-    word-break: keep-all !important;
-    overflow-wrap: break-word !important;
-    white-space: normal !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    min-height: 56px !important;
-  }
-    
-/* 3. Foto Utuh Penuh Tanpa Terpotong (Contain) */
-.paslon-img-wrapper {
-  position: relative;
-  width: 100%;
-  margin: 0 auto 12px auto;
-  padding: 4px;
-  background: linear-gradient(135deg, #00f2fe, #38ef7d);
-  border-radius: 10px;
-  box-shadow: 0 0 12px rgba(0, 242, 254, 0.35);
-}
+    /* Kartu Utama Per-Paslon */
+    .card-paslon {
+      background: #0f172a;
+      border: 2px solid #00f2fe;
+      border-radius: 12px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 0 15px rgba(0, 242, 254, 0.15);
+      height: 100%;
+    }
+        
+    /* Header Nama Paslon - Glowing Neon, Presisi 2 Baris & Anti Terpotong */
+    .paslon-header {
+      background: #1e293b !important;
+      color: #00f2fe !important;
+      padding: 10px 6px !important;
+      border-radius: 8px !important;
+      margin-bottom: 12px !important;
+      font-size: clamp(10px, 0.95vw, 12px) !important;
+      border: 1px solid #00f2fe !important;
+      box-shadow: 0 0 10px rgba(0, 242, 254, 0.35) !important;
+      line-height: 1.4 !important;
+      text-align: center !important;
+      word-break: keep-all !important;
+      overflow-wrap: break-word !important;
+      white-space: normal !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      min-height: 56px !important;
+    }
+        
+    /* Frame Foto Paslon (Utuh & Presisi) */
+    .paslon-img-wrapper {
+      position: relative;
+      width: 100%;
+      margin: 0 auto 12px auto;
+      padding: 4px;
+      background: linear-gradient(135deg, #00f2fe, #38ef7d);
+      border-radius: 10px;
+      box-shadow: 0 0 12px rgba(0, 242, 254, 0.35);
+    }
 
-.paslon-img {
-  width: 100%;
-  height: auto;
-  max-height: 360px;
-  object-fit: contain !important; /* Foto kembali utuh 100% dari atas ke bawah */
-  border-radius: 6px;
-  display: block;
-  background-color: #0b0f19;
-}
+    .paslon-img {
+      width: 100%;
+      height: auto;
+      max-height: 360px;
+      object-fit: contain !important;
+      border-radius: 6px;
+      display: block;
+      background-color: #0b0f19;
+    }
 
-/* 4. Visi & Misi Ringkas & Rata Kanan-Kiri */
-.visi-misi {
-  text-align: justify;
-  font-size: 11px;
-  color: #cbd5e1;
-  margin-bottom: 12px;
-  background: #1e293b;
-  padding: 10px 12px;
-  border-radius: 8px;
-  border: 1px solid #334155;
-  line-height: 1.5;
-}
+    /* Blok Teks Visi & Misi Paslon */
+    .visi-misi {
+      text-align: justify;
+      font-size: 11px;
+      color: #cbd5e1;
+      margin-bottom: 12px;
+      background: #1e293b;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid #334155;
+      line-height: 1.5;
+    }
 
-.visi-misi h4 {
-  color: #38ef7d;
-  margin-top: 6px;
-  margin-bottom: 3px;
-  font-size: 11px;
-  text-transform: uppercase;
-  border-bottom: 1px dashed #334155;
-  padding-bottom: 2px;
-}
+    .visi-misi h4 {
+      color: #38ef7d;
+      margin-top: 6px;
+      margin-bottom: 3px;
+      font-size: 11px;
+      text-transform: uppercase;
+      border-bottom: 1px dashed #334155;
+      padding-bottom: 2px;
+    }
 
-.visi-misi h4:first-child {
-  margin-top: 0;
-}
+    .visi-misi h4:first-child {
+      margin-top: 0;
+    }
 
+    /* ==========================================================================
+       7. POP-UP MODAL KONFIRMASI / NOTIFIKASI
+       ========================================================================== */
     .custom-modal-box {
       background: #1e293b;
       border: 3px solid #00f2fe;
@@ -318,49 +340,55 @@
       justify-content: center;
       gap: 10px;
     }
-    
-/* Pop-up Modal Melayang Tepat di Tengah Layar */
-.modal-overlay, #modalKonfirmasi {
-  position: fixed !important;
-  top: 0 !important;
-  left: 0 !important;
-  width: 100vw !important;
-  height: 100vh !important;
-  background: rgba(5, 10, 20, 0.85) !important;
-  backdrop-filter: blur(5px) !important;
-  z-index: 9999 !important;
-  align-items: center !important;
-  justify-content: center !important;
-  padding: 15px !important;
-}
-
-  .custom-modal-box, .modal-content {
-    background: #1e293b !important;
-    border: 2px solid #00f2fe !important;
-    box-shadow: 0 0 25px rgba(0, 242, 254, 0.4) !important;
-    border-radius: 14px !important;
-    max-width: 440px !important;
-    width: 90% !important;
-    padding: 24px !important;
-    text-align: center !important;
-    margin: auto !important;
-  }
-    
-   @media (max-width: 768px) {
-    body { padding: 6px; }
-    .container { padding: 12px; }
-    .paslon-container, #paslonContainer, .paslon-grid, .-container {
-      grid-template-columns: 1fr !important; /* Di HP berubah jadi 1 kolom rapi */
+        
+    /* Pop-up Modal Melayang Tepat di Tengah Layar */
+    .modal-overlay, #modalKonfirmasi {
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100vw !important;
+      height: 100vh !important;
+      background: rgba(5, 10, 20, 0.85) !important;
+      backdrop-filter: blur(5px) !important;
+      z-index: 9999 !important;
+      align-items: center !important;
+      justify-content: center !important;
+      padding: 15px !important;
     }
-    .card-paslon { flex: 1 1 100%; }
-    .btn { font-size: 11px; padding: 10px; }
-    .header-logo { width: 35px; height: 35px; }
-  }
+
+    .custom-modal-box, .modal-content {
+      background: #1e293b !important;
+      border: 2px solid #00f2fe !important;
+      box-shadow: 0 0 25px rgba(0, 242, 254, 0.4) !important;
+      border-radius: 14px !important;
+      max-width: 440px !important;
+      width: 90% !important;
+      padding: 24px !important;
+      text-align: center !important;
+      margin: auto !important;
+    }
+        
+    /* ==========================================================================
+       8. RESPONSIVE DESIGN (TAMPILAN MONITOR & SMARTPHONE)
+       ========================================================================== */
+    @media (max-width: 768px) {
+      body { padding: 6px; }
+      .container { padding: 12px; }
+      .paslon-container, #paslonContainer, .paslon-grid, .-container {
+        grid-template-columns: 1fr !important; /* Di HP berubah jadi 1 kolom rapi */
+      }
+      .card-paslon { flex: 1 1 100%; }
+      .btn { font-size: 11px; padding: 10px; }
+      .header-logo { width: 35px; height: 35px; }
+    }
   </style>
 </head>
 <body>
 
   <div class="container">
+    <!-- ==========================================================================
+         A. KEPALA HALAMAN (HEADER BRANDING & LOGO)
+         ========================================================================== -->
     <div class="header-title">
       <span class="badge-top">E - VOTING RESMI</span>
       <div class="header-content">
@@ -373,7 +401,9 @@
 
     <hr class="divider">
 
-    <!-- Section Login -->
+    <!-- ==========================================================================
+         B. LAYAR 1: AUTENTIKASI / LOGIN PEMILIH
+         ========================================================================== -->
     <div id="loginSection" class="login-box">
       <p style="margin-bottom: 18px; color: #00f2fe; font-size: 12px; line-height: 1.5;">
         Masukkan NISN Anda
@@ -388,14 +418,18 @@
       <div id="loginError" class="error-msg hidden"></div>
     </div>
 
-    <!-- Section Voting Paslon -->
+    <!-- ==========================================================================
+         C. LAYAR 2: TAMPILAN VOTING PASLON
+         ========================================================================== -->
     <div id="votingSection" class="hidden">
+      <!-- Jam & Tanggal Realtime -->
       <div class="clock-card">
         <span>📅 <span id="clockDate">Memuat tanggal...</span></span>
         <span>|</span>
         <span>⏰ <span id="clockTime">00:00:00 WIB</span></span>
       </div>
 
+      <!-- Data Pemilih yang sedang Aktif -->
       <div class="user-info">
         <b>Pemilih:</b> <span id="userName">-</span> | <b>Status:</b> <span id="userKelas">-</span><br>
         <b>ID:</b> <span id="userNis">-</span>
@@ -405,13 +439,16 @@
         PILIH PASLON FAVORIT ANDA
       </h3>
       
+      <!-- Container Tempat Menampilkan Daftar Paslon -->
       <div class="paslon-container" id="paslonContainer">
         <p style="text-align:center; width: 100%; color:#00f2fe; font-size: 12px;">Memuat daftar paslon...</p>
       </div>
     </div>
   </div>
 
-  <!-- Custom Pop-Up Modal -->
+  <!-- ==========================================================================
+       D. KOMPONEN POP-UP MODAL (NOTIFIKASI / KONFIRMASI)
+       ========================================================================== -->
   <div id="customModal" class="modal-overlay hidden">
     <div class="custom-modal-box">
       <div id="modalTitle" class="modal-title">KONFIRMASI</div>
@@ -423,12 +460,17 @@
   </div>
 
   <script>
+    // URL Web App Apps Script (Google Spreadsheet DB)
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyfb70IU_3Gl0SonFb76SViVA9z-jiwi9Y9T_a0-CWrohAQuRwSizXdObBA2CKfAF4/exec";
 
+    // Variable Penyimpan Sesi User Pemilih
     let currentNis = "";
     let currentNama = "";
     let currentRole = "SISWA";
 
+    // ==========================================================================
+    // FUNGSI 1: MEMBUKA MODAL NOTIFIKASI BIASA (PESAN PEMBERITAHUAN ALERTS)
+    // ==========================================================================
     function showCustomAlert(msg, title = "PEMBERITAHUAN", callbackOnClose = null) {
       document.getElementById('modalTitle').innerText = title;
       document.getElementById('modalMsg').innerText = msg;
@@ -450,6 +492,9 @@
       document.getElementById('customModal').style.setProperty('display', 'flex', 'important');
     }
 
+    // ==========================================================================
+    // FUNGSI 2: MEMBUKA MODAL KONFIRMASI (TANYA YA/BATAL SAAT MEMILIH PASLON)
+    // ==========================================================================
     function showCustomConfirm(msg, onConfirm, title = "KONFIRMASI PILIHAN") {
       document.getElementById('modalTitle').innerText = title;
       document.getElementById('modalMsg').innerText = msg;
@@ -479,10 +524,16 @@
       document.getElementById('customModal').style.setProperty('display', 'flex', 'important');
     }
 
+    // ==========================================================================
+    // FUNGSI 3: MENUTUP MODAL POP-UP
+    // ==========================================================================
     function closeCustomModal() {
-     document.getElementById('customModal').style.setProperty('display', 'none', 'important');
+      document.getElementById('customModal').style.setProperty('display', 'none', 'important');
     }
 
+    // ==========================================================================
+    // FUNGSI 4: PEMBARUAN JAM & TANGGAL REALTIME
+    // ==========================================================================
     function updateClock() {
       const now = new Date();
       const optionsDate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
@@ -496,7 +547,10 @@
     setInterval(updateClock, 1000);
     updateClock();
 
-   function resetToHome() {
+    // ==========================================================================
+    // FUNGSI 5: RESET TAMPILAN KE AWAL (KEMBALI KE HARIAN LOGIN)
+    // ==========================================================================
+    function resetToHome() {
       currentNis = "";
       currentNama = "";
       currentRole = "SISWA";
@@ -515,56 +569,62 @@
       document.getElementById('paslonContainer').innerHTML = '<p style="text-align:center; width: 100%; color:#00f2fe; font-size: 12px;">Memuat daftar paslon...</p>';
     }
 
-function prosesLogin() {
-  const nis = document.getElementById('nisInput').value.trim();
-  const errorDiv = document.getElementById('loginError');
-  const btnLogin = document.getElementById('btnLogin');
-  
-  errorDiv.innerText = "";
-  errorDiv.classList.add('hidden');
+    // ==========================================================================
+    // FUNGSI 6: PROSES AUTENTIKASI LOGIN PEMILIH VIA API
+    // ==========================================================================
+    function prosesLogin() {
+      const nis = document.getElementById('nisInput').value.trim();
+      const errorDiv = document.getElementById('loginError');
+      const btnLogin = document.getElementById('btnLogin');
+      
+      errorDiv.innerText = "";
+      errorDiv.classList.add('hidden');
 
-  if (!nis) {
-    errorDiv.innerText = "NISN / Nama tidak boleh kosong!";
-    errorDiv.classList.remove('hidden');
-    return;
-  }
-
-  // Respon instan dalam 1 kali klik (0.01 detik)
-  btnLogin.innerText = "⏳ MEMERIKSA...";
-  btnLogin.disabled = true;
-
-  fetch(`${SCRIPT_URL}?action=verifikasi&nis=${encodeURIComponent(nis)}&t=${Date.now()}`, { redirect: 'follow' })
-    .then(res => res.json())
-    .then(response => {
-      if (response.success) {
-        currentNis = response.identityKey || nis;
-        currentNama = response.nama; 
-        currentRole = response.role || "SISWA";
-
-        // Sembunyikan layar Login dan tampilkan Layar Voting Seketika
-        document.getElementById('loginSection').classList.add('hidden');
-        document.getElementById('votingSection').classList.remove('hidden');
-        
-        document.getElementById('userName').innerText = response.nama;
-        document.getElementById('userKelas').innerText = response.kelas;
-        document.getElementById('userNis').innerText = currentNis || "-";
-
-        loadPaslonDataForVoting();
-      } else {
-        btnLogin.innerText = "🚀 MASUK SYSTEM";
-        btnLogin.disabled = false;
-        errorDiv.innerText = response.message;
+      if (!nis) {
+        errorDiv.innerText = "NISN / Nama tidak boleh kosong!";
         errorDiv.classList.remove('hidden');
+        return;
       }
-    })
-    .catch(() => {
-      btnLogin.innerText = "🚀 MASUK SYSTEM";
-      btnLogin.disabled = false;
-      errorDiv.innerText = "Gagal terhubung ke server!";
-      errorDiv.classList.remove('hidden');
-    });
-}
 
+      // Respon instan dalam 1 kali klik (0.01 detik)
+      btnLogin.innerText = "⏳ MEMERIKSA...";
+      btnLogin.disabled = true;
+
+      fetch(`${SCRIPT_URL}?action=verifikasi&nis=${encodeURIComponent(nis)}&t=${Date.now()}`, { redirect: 'follow' })
+        .then(res => res.json())
+        .then(response => {
+          if (response.success) {
+            currentNis = response.identityKey || nis;
+            currentNama = response.nama; 
+            currentRole = response.role || "SISWA";
+
+            // Sembunyikan layar Login dan tampilkan Layar Voting Seketika
+            document.getElementById('loginSection').classList.add('hidden');
+            document.getElementById('votingSection').classList.remove('hidden');
+            
+            document.getElementById('userName').innerText = response.nama;
+            document.getElementById('userKelas').innerText = response.kelas;
+            document.getElementById('userNis').innerText = currentNis || "-";
+
+            loadPaslonDataForVoting();
+          } else {
+            btnLogin.innerText = "🚀 MASUK SYSTEM";
+            btnLogin.disabled = false;
+            errorDiv.innerText = response.message;
+            errorDiv.classList.remove('hidden');
+          }
+        })
+        .catch(() => {
+          btnLogin.innerText = "🚀 MASUK SYSTEM";
+          btnLogin.disabled = false;
+          errorDiv.innerText = "Gagal terhubung ke server!";
+          errorDiv.classList.remove('hidden');
+        });
+    }
+
+    // ==========================================================================
+    // FUNGSI 7: MEMUAT DATA PASLON & RENDERING KARTU VOTING (GRID 3 KOLOM)
+    // ==========================================================================
     async function loadPaslonDataForVoting() {
       const container = document.getElementById('paslonContainer');
       container.innerHTML = '<p style="text-align:center; width: 100%; color:#00f2fe; font-size: 12px;">Memuat daftar paslon...</p>';
@@ -619,38 +679,41 @@ function prosesLogin() {
       }
     }
 
-function prosesSimpanSuara(namaPaslon, labelPaslon) {
-  showCustomConfirm("Apakah Anda yakin memilih " + labelPaslon + " (" + namaPaslon + ")?", function() {
-    let nisKirim = (currentRole === "GURU") ? "" : currentNis;
+    // ==========================================================================
+    // FUNGSI 8: MENGIRIM SUARA PILIHAN KE SPREADSHEET VIA API
+    // ==========================================================================
+    function prosesSimpanSuara(namaPaslon, labelPaslon) {
+      showCustomConfirm("Apakah Anda yakin memilih " + labelPaslon + " (" + namaPaslon + ")?", function() {
+        let nisKirim = (currentRole === "GURU") ? "" : currentNis;
 
-    const queryUrl = `${SCRIPT_URL}?action=simpan` +
-      `&nis=${encodeURIComponent(nisKirim)}` +
-      `&nama=${encodeURIComponent(currentNama)}` +
-      `&pilihan=${encodeURIComponent(namaPaslon)}` +
-      `&role=${encodeURIComponent(currentRole)}` +
-      `&t=${Date.now()}`;
+        const queryUrl = `${SCRIPT_URL}?action=simpan` +
+          `&nis=${encodeURIComponent(nisKirim)}` +
+          `&nama=${encodeURIComponent(currentNama)}` +
+          `&pilihan=${encodeURIComponent(namaPaslon)}` +
+          `&role=${encodeURIComponent(currentRole)}` +
+          `&t=${Date.now()}`;
 
-    // Eksekusi pengiriman instan
-    fetch(queryUrl, { method: "GET", redirect: "follow" })
-      .then(res => res.json())
-      .then(response => {
-        if (response.success) {
-          showCustomAlert("Terima kasih! Suara Anda telah berhasil disimpan.", "SUKSES MEMILIH", function() {
-            resetToHome();
+        // Eksekusi pengiriman instan
+        fetch(queryUrl, { method: "GET", redirect: "follow" })
+          .then(res => res.json())
+          .then(response => {
+            if (response.success) {
+              showCustomAlert("Terima kasih! Suara Anda telah berhasil disimpan.", "SUKSES MEMILIH", function() {
+                resetToHome();
+              });
+            } else {
+              showCustomAlert(response.message || "Gagal menyimpan suara.", "PERINGATAN", function() {
+                resetToHome();
+              });
+            }
+          })
+          .catch(() => {
+            showCustomAlert("Terjadi kesalahan koneksi saat menyimpan suara.", "ERROR KONEKSI", function() {
+              resetToHome();
+            });
           });
-        } else {
-          showCustomAlert(response.message || "Gagal menyimpan suara.", "PERINGATAN", function() {
-            resetToHome();
-          });
-        }
-      })
-      .catch(() => {
-        showCustomAlert("Terjadi kesalahan koneksi saat menyimpan suara.", "ERROR KONEKSI", function() {
-          resetToHome();
-        });
       });
-  });
-}
+    }
   </script>
 </body>
 </html>
