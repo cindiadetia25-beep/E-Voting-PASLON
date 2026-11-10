@@ -321,19 +321,18 @@
     
 /* Pop-up Modal Melayang Tepat di Tengah Layar */
 .modal-overlay, #modalKonfirmasi {
-    display: none !important; /* Tersembunyi secara default */
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100vw !important;
-    height: 100vh !important;
-    background: rgba(5, 10, 20, 0.85) !important;
-    backdrop-filter: blur(5px) !important;
-    z-index: 9999 !important;
-    align-items: center !important;
-    justify-content: center !important;
-    padding: 15px !important;
-  }
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background: rgba(5, 10, 20, 0.85) !important;
+  backdrop-filter: blur(5px) !important;
+  z-index: 9999 !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 15px !important;
+}
 
   .custom-modal-box, .modal-content {
     background: #1e293b !important;
@@ -448,7 +447,7 @@
       };
 
       btnContainer.appendChild(btnOk);
-      document.getElementById('customModal').classList.remove('hidden');
+      document.getElementById('customModal').style.setProperty('display', 'flex', 'important');
     }
 
     function showCustomConfirm(msg, onConfirm, title = "KONFIRMASI PILIHAN") {
@@ -477,11 +476,11 @@
 
       btnContainer.appendChild(btnYa);
       btnContainer.appendChild(btnBatal);
-      document.getElementById('customModal').classList.remove('hidden');
+      document.getElementById('customModal').style.setProperty('display', 'flex', 'important');
     }
 
     function closeCustomModal() {
-      document.getElementById('customModal').classList.add('hidden');
+     document.getElementById('customModal').style.setProperty('display', 'none', 'important');
     }
 
     function updateClock() {
