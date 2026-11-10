@@ -220,26 +220,27 @@
   height: 100%;
 }
     
-/* Header Nama Paslon - Glowing Neon Biru, Presisi & Anti Terpotong */
-  .paslon-header {
-    background: #1e293b !important;
-    color: #00f2fe !important;
-    padding: 10px 8px !important;
-    border-radius: 8px !important;
-    margin-bottom: 12px !important;
-    font-size: clamp(11px, 1.1vw, 13px) !important;
-    border: 1px solid #00f2fe !important;
-    box-shadow: 0 0 10px rgba(0, 242, 254, 0.35) !important;
-    line-height: 1.4 !important;
-    letter-spacing: 0.5px !important;
-    text-align: center !important;
-    word-wrap: break-word !important;
-    white-space: normal !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    min-height: 54px !important;
-  }
+/* Header Nama Paslon - Glowing Neon, Presisi & Anti Terpotong */
+.paslon-header {
+  background: #1e293b !important;
+  color: #00f2fe !important;
+  padding: 12px 6px !important;
+  border-radius: 8px !important;
+  margin-bottom: 12px !important;
+  font-size: clamp(10px, 0.95vw, 12px) !important; /* Ukuran font disesuaikan agar nama panjang muat utuh */
+  border: 1px solid #00f2fe !important;
+  box-shadow: 0 0 10px rgba(0, 242, 254, 0.35) !important;
+  line-height: 1.4 !important;
+  letter-spacing: 0.3px !important;
+  text-align: center !important;
+  word-break: keep-all !important; /* Mencegah kata terpotong di tengah huruf */
+  overflow-wrap: break-word !important;
+  white-space: normal !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 62px !important; /* Memberi ruang tinggi yang cukup untuk nama 2-3 baris */
+}
     
 /* 3. Foto Utuh Penuh Tanpa Terpotong (Contain) */
 .paslon-img-wrapper {
