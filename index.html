@@ -207,82 +207,78 @@
       flex-wrap: wrap;
     }
 
-    .card-paslon {
-      flex: 1 1 260px;
-      background: #0f172a;
-      border: 2px solid #00f2fe;
-      border-radius: 10px;
-      padding: 12px;
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
+  /* 1. Kartu Paslon Flexbox (Membuat Semua Kartu Sama Tinggi & Sejajar) */
+.card-paslon {
+  background: #0f172a;
+  border: 2px solid #00f2fe;
+  border-radius: 12px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Menjaga tombol pilih selalu di dasar kartu */
+  height: 100%;
+  box-shadow: 0 0 15px rgba(0, 242, 254, 0.15);
+}
 
- /* 1. Nama Paslon Presisi & Sejajar (Anti Terpotong) */
+/* 2. Header Nama Paslon Sejajar Presisi */
 .paslon-header {
   background: #1e293b;
   color: #00f2fe;
-  padding: 12px 8px;
+  padding: 10px 6px;
   border-radius: 8px;
-  margin-bottom: 14px;
-  font-size: clamp(11px, 1.2vw, 13px);
+  margin-bottom: 12px;
+  font-size: clamp(11px, 1.1vw, 13px);
   border: 1px solid #00f2fe;
-  line-height: 1.4;
-  letter-spacing: 0.5px;
+  line-height: 1.3;
   text-align: center;
   word-wrap: break-word;
-  white-space: normal;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 54px; /* Membuat tinggi kotak semua nama paslon presisi & sejajar */
+  min-height: 50px;
 }
 
-/* 2. Bingkai Foto Modern Keren dengan Efek Glowing Neon */
+/* 3. Ukuran Foto Ringkas & Proporsional (Mencegah Card Terlalu Panjang) */
 .paslon-img-wrapper {
   position: relative;
   width: 100%;
-  max-width: 240px;
-  margin: 0 auto 16px auto;
+  max-width: 200px; /* Ukuran lebar bingkai disesuaikan */
+  margin: 0 auto 12px auto;
   padding: 4px;
-  background: linear-gradient(135deg, #00f2fe, #38ef7d); /* Lis Bingkai Gradient */
-  border-radius: 12px;
-  box-shadow: 0 0 15px rgba(0, 242, 254, 0.4); /* Efek Cahaya Neon */
+  background: linear-gradient(135deg, #00f2fe, #38ef7d);
+  border-radius: 10px;
+  box-shadow: 0 0 12px rgba(0, 242, 254, 0.35);
 }
 
 .paslon-img {
   width: 100%;
-  height: 260px;
+  height: 200px; /* Diperkecil dari 260px ke 200px agar compact & hemat ruang */
   object-fit: cover;
   object-position: top center;
-  border-radius: 8px;
+  border-radius: 6px;
   display: block;
   background-color: #0f172a;
 }
 
-/* 3. Visi & Misi Rata Kanan-Kiri (Justified), Rapi & Tanpa Scroll */
+/* 4. Visi & Misi Ringkas & Rata Kanan-Kiri */
 .visi-misi {
-  text-align: justify; /* Teks rata kanan-kiri rapi */
+  text-align: justify;
   font-size: 11px;
   color: #cbd5e1;
-  margin-bottom: 14px;
+  margin-bottom: 12px;
   background: #1e293b;
-  padding: 14px;
+  padding: 10px 12px;
   border-radius: 8px;
   border: 1px solid #334155;
-  max-height: none !important; /* Menghapus batas tinggi scroll */
-  overflow-y: visible !important; /* Mengubah scrollbar menjadi tampil penuh */
-  line-height: 1.6;
+  line-height: 1.5;
 }
 
 .visi-misi h4 {
   color: #38ef7d;
-  margin-top: 8px;
-  margin-bottom: 4px;
-  font-size: 12px;
+  margin-top: 6px;
+  margin-bottom: 3px;
+  font-size: 11px;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
   border-bottom: 1px dashed #334155;
   padding-bottom: 2px;
 }
@@ -290,17 +286,6 @@
 .visi-misi h4:first-child {
   margin-top: 0;
 }
-    .modal-overlay {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(15, 23, 42, 0.95);
-      z-index: 1000;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 15px;
-    }
 
     .custom-modal-box {
       background: #1e293b;
