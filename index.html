@@ -198,7 +198,7 @@
 
     .user-info span { color: #ffffff; }
 
-    .paslon-container {
+    -container {
       display: flex;
       justify-content: center;
       align-items: stretch;
@@ -219,54 +219,77 @@
       justify-content: space-between;
     }
 
-   /* 1. Nama Paslon fleksibel agar tidak terpotong */
-    .paslon-header {
-      background: #1e293b;
-      color: #00f2fe;
-      padding: 10px;
-      border-radius: 6px;
-      margin-bottom: 12px;
-      font-size: clamp(12px, 2vw, 14px);
-      border: 1px solid #00f2fe;
-      line-height: 1.4;
-      letter-spacing: 0.5px;
-      word-wrap: break-word;       /* Agar nama panjang otomatis turun ke bawah */
-      white-space: normal;
-    }
+ /* 1. Nama Paslon Presisi & Sejajar (Anti Terpotong) */
+.paslon-header {
+  background: #1e293b;
+  color: #00f2fe;
+  padding: 12px 8px;
+  border-radius: 8px;
+  margin-bottom: 14px;
+  font-size: clamp(11px, 1.2vw, 13px);
+  border: 1px solid #00f2fe;
+  line-height: 1.4;
+  letter-spacing: 0.5px;
+  text-align: center;
+  word-wrap: break-word;
+  white-space: normal;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 54px; /* Membuat tinggi kotak semua nama paslon presisi & sejajar */
+}
 
-    /* 2. Foto Paslon lebih besar & utuh */
-    .paslon-img {
-      width: 100%;
-      max-width: 260px;            /* Diperbesar dari 200px */
-      height: 280px;               /* Diperbesar dari 220px */
-      object-fit: contain;         /* Menjaga foto utuh & tidak terpotong */
-      object-position: center;
-      border-radius: 8px;
-      display: block;
-      margin: 0 auto 14px auto;
-      background-color: transparent;
-    }
+/* 2. Bingkai Foto Modern Keren dengan Efek Glowing Neon */
+.paslon-img-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 240px;
+  margin: 0 auto 16px auto;
+  padding: 4px;
+  background: linear-gradient(135deg, #00f2fe, #38ef7d); /* Lis Bingkai Gradient */
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0, 242, 254, 0.4); /* Efek Cahaya Neon */
+}
 
-    /* 3. Visi Misi tampil utuh tanpa scrollbar */
-    .visi-misi {
-      text-align: left;
-      font-size: 11px;
-      color: #cbd5e1;
-      margin-bottom: 14px;
-      background: #1e293b;
-      padding: 12px;
-      border-radius: 6px;
-      border: 1px solid #334155;
-      max-height: none !important; /* Hapus batas tinggi */
-      overflow-y: visible !important; /* Hilangkan scrollbar */
-      line-height: 1.5;
-    }
-    
-    .visi-misi h4 {
-      color: #38ef7d;
-      margin-bottom: 4px;
-    }
+.paslon-img {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  object-position: top center;
+  border-radius: 8px;
+  display: block;
+  background-color: #0f172a;
+}
 
+/* 3. Visi & Misi Rata Kanan-Kiri (Justified), Rapi & Tanpa Scroll */
+.visi-misi {
+  text-align: justify; /* Teks rata kanan-kiri rapi */
+  font-size: 11px;
+  color: #cbd5e1;
+  margin-bottom: 14px;
+  background: #1e293b;
+  padding: 14px;
+  border-radius: 8px;
+  border: 1px solid #334155;
+  max-height: none !important; /* Menghapus batas tinggi scroll */
+  overflow-y: visible !important; /* Mengubah scrollbar menjadi tampil penuh */
+  line-height: 1.6;
+}
+
+.visi-misi h4 {
+  color: #38ef7d;
+  margin-top: 8px;
+  margin-bottom: 4px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1px dashed #334155;
+  padding-bottom: 2px;
+}
+
+.visi-misi h4:first-child {
+  margin-top: 0;
+}
     .modal-overlay {
       position: fixed;
       top: 0; left: 0;
@@ -550,7 +573,9 @@ function prosesLogin() {
             cardDiv.innerHTML = `
               <div>
                 ${paslonHeader.outerHTML}
+                <div class="paslon-img-wrapper">
                 <img src="${fotoUrl}" alt="Paslon ${p.no}" class="paslon-img">
+                </div>
                 <div class="visi-misi">
                   <h4>Visi:</h4>
                   <p>${p.visi}</p>
