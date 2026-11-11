@@ -10,6 +10,9 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
+        /* ==========================================================================
+           1. STYLING DASAR & RESET
+           ========================================================================== */
         * { 
             box-sizing: border-box; 
             margin: 0; 
@@ -25,8 +28,14 @@
             padding: 12px; 
         }
 
+        /* ==========================================================================
+           2. LAYOUT CONTAINER UTAMA
+           ========================================================================== */
         .container { max-width: 1050px; margin: 0 auto; width: 100%; }
 
+        /* ==========================================================================
+           3. HEADER & LOGO DASHBOARD
+           ========================================================================== */
         header { text-align: center; margin-bottom: 20px; }
         
         .header-content {
@@ -60,6 +69,9 @@
             border-radius: 2px;
         }
 
+        /* ==========================================================================
+           4. WIDGET JAM REAL-TIME HEADER
+           ========================================================================== */
         .clock-box {
             display: inline-flex;
             align-items: center;
@@ -73,6 +85,9 @@
             margin-top: 10px;
         }
 
+        /* ==========================================================================
+           5. KARTU & FORM INPUT ADMIN
+           ========================================================================== */
         .card { 
             background: #1e293b; 
             border: 2px solid #00d2ff; 
@@ -119,6 +134,9 @@
         }
         .form-group textarea { height: 75px; resize: vertical; line-height: 1.4; }
 
+        /* ==========================================================================
+           6. STYLING TOMBOL & VARIAN
+           ========================================================================== */
         .btn { 
             padding: 10px 16px; 
             border: 2px solid #ffffff; 
@@ -153,6 +171,9 @@
         .btn-warning { background: #ffb703; color: #000; }
         .btn-secondary { background: #334155; color: #fff; }
 
+        /* ==========================================================================
+           7. MENU NAVIGASI UTAMA
+           ========================================================================== */
         .nav-menu-box {
             display: flex;
             justify-content: center;
@@ -161,6 +182,9 @@
             margin-bottom: 20px;
         }
 
+        /* ==========================================================================
+           8. TABEL DATA PASLON ADMIN
+           ========================================================================== */
         .table-responsive { width: 100%; overflow-x: auto; }
         table { width: 100%; border-collapse: collapse; margin-top: 10px; min-width: 550px; }
         th, td { padding: 10px; text-align: left; border-bottom: 1px solid #334155; font-size: 11px; line-height: 1.4; }
@@ -180,6 +204,9 @@
         .img-table { width: 45px; height: 45px; object-fit: cover; border-radius: 6px; border: 1px solid #00d2ff; }
         .hidden { display: none !important; }
 
+        /* ==========================================================================
+           9. MODAL REAL COUNT & DASHBOARD REKAP
+           ========================================================================== */
         .modal {
             display: none; 
             position: fixed; 
@@ -314,6 +341,9 @@
 
         .action-btns { display: flex; gap: 4px; flex-wrap: wrap; }
 
+        /* ==========================================================================
+           10. CUSTOM ALERT & CONFIRMATION BOX ADMIN
+           ========================================================================== */
         .custom-alert-box {
             background: #1e293b;
             border: 3px solid #00d2ff;
@@ -327,6 +357,9 @@
         .custom-alert-msg { color: #fff; font-size: 11px; margin-bottom: 16px; line-height: 1.5; }
         .custom-alert-btns { display: flex; justify-content: center; gap: 8px; }
 
+        /* ==========================================================================
+           11. RESPONSIVE MEDIA QUERIES (MOBILE)
+           ========================================================================== */
         @media (max-width: 768px) {
             body { padding: 8px; }
             .card { padding: 12px; }
@@ -340,6 +373,9 @@
 <body>
 
 <div class="container">
+    <!-- ==========================================================================
+         SECTION 1: HEADER UTAMA & LOGO DOKUMENTASI
+         ========================================================================== -->
     <header>
         <div class="header-content">
             <img src="assets/smp.png" alt="Logo SMP" class="header-logo" onerror="this.style.display='none'">
@@ -355,6 +391,9 @@
 
     <hr class="divider">
 
+    <!-- ==========================================================================
+         SECTION 2: TOMBOL NAVIGASI AKSI UTAMA
+         ========================================================================== -->
     <div class="nav-menu-box">
         <button class="btn btn-realcount" onclick="openRealCountModal()">
             🏛️ REAL COUNT PEMILOS
@@ -364,6 +403,9 @@
         </button>
     </div>
 
+    <!-- ==========================================================================
+         SECTION 3: FORM KELOLA DATA PASLON (TAMBAH / EDIT)
+         ========================================================================== -->
     <div class="card">
         <h2>✏️ Kelola Paslon, Visi, Misi & Foto</h2>
         <form id="formPaslon" onsubmit="savePaslon(event)">
@@ -400,6 +442,9 @@
             </div>
         </form>
 
+        <!-- ==========================================================================
+             SECTION 4: TABEL LIST DAFTAR PASLON TERDAFTAR
+             ========================================================================== -->
         <h3 style="color: #00d2ff; margin-top: 20px; margin-bottom: 12px; font-size: 13px; letter-spacing: 1px;">Daftar Paslon Terdaftar</h3>
         <div class="table-responsive">
             <table>
@@ -421,7 +466,9 @@
     </div>
 </div>
 
-<!-- Modal Real Count Pemilos -->
+<!-- ==========================================================================
+     SECTION 5: MODAL REAL COUNT PEROLEHAN SUARA & GRAFIK (LIVE COUNT)
+     ========================================================================== -->
 <div id="modalRealCount" class="modal">
     <div class="modal-content-presidential">
         <div class="modal-header-presidential">
@@ -468,7 +515,9 @@
     </div>
 </div>
 
-<!-- Custom Modal Pop-Up Admin -->
+<!-- ==========================================================================
+     SECTION 6: CUSTOM POP-UP MODAL ALERT & KONFIRMASI ADMIN
+     ========================================================================== -->
 <div id="customAlertModal" class="modal">
     <div class="custom-alert-box">
         <div class="custom-alert-title" id="customAlertTitle">NOTIFIKASI</div>
@@ -480,6 +529,9 @@
 </div>
 
 <script>
+    // ==========================================================================
+    // DEKLARASI KONSTANTA & VARIABEL GLOBAL SYSTEM
+    // ==========================================================================
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyfb70IU_3Gl0SonFb76SViVA9z-jiwi9Y9T_a0-CWrohAQuRwSizXdObBA2CKfAF4/exec";
     
     let base64Foto = "";
@@ -490,6 +542,9 @@
     let confirmActionHandler = null;
     let isFetchingVote = false;
 
+    // ==========================================================================
+    // FUNGSI 1: MENAMPILKAN MODAL NOTIFIKASI PESAN INFORMATIF (ALERT)
+    // ==========================================================================
     function showCustomAlert(msg, title = "SYSTEM INFO") {
         document.getElementById("customAlertTitle").innerText = title;
         document.getElementById("customAlertMessage").innerText = msg;
@@ -497,6 +552,9 @@
         document.getElementById("customAlertModal").style.display = "flex";
     }
 
+    // ==========================================================================
+    // FUNGSI 2: MENAMPILKAN MODAL KONFIRMASI (YA / BATAL)
+    // ==========================================================================
     function showCustomConfirm(msg, onConfirm, title = "KONFIRMASI") {
         document.getElementById("customAlertTitle").innerText = title;
         document.getElementById("customAlertMessage").innerText = msg;
@@ -508,19 +566,29 @@
         document.getElementById("customAlertModal").style.display = "flex";
     }
 
-  // Fix: Tambahkan async pada executeConfirmAction agar fetch hapus berjalan lancar
-async function executeConfirmAction() {
-    const actionToRun = confirmActionHandler;
-    closeCustomAlert();
-    if (typeof actionToRun === 'function') {
-        await actionToRun();
+    // ==========================================================================
+    // FUNGSI 3: MENJALANKAN AKSI EKSEKUSI SETELAH TEKAN TOMBOL YA PADA MODAL
+    // ==========================================================================
+    // Fix: Tambahkan async pada executeConfirmAction agar fetch hapus berjalan lancar
+    async function executeConfirmAction() {
+        const actionToRun = confirmActionHandler;
+        closeCustomAlert();
+        if (typeof actionToRun === 'function') {
+            await actionToRun();
+        }
     }
-}
+
+    // ==========================================================================
+    // FUNGSI 4: MENUTUP MODAL NOTIFIKASI / KONFIRMASI
+    // ==========================================================================
     function closeCustomAlert() {
         document.getElementById("customAlertModal").style.display = "none";
         confirmActionHandler = null;
     }
 
+    // ==========================================================================
+    // FUNGSI 5: PEMBARUAN JAM WIDGET UTAMA MONITORING (1 DETIK)
+    // ==========================================================================
     function updateClock() {
         const now = new Date();
         const timeStr = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + " WIB";
@@ -529,6 +597,9 @@ async function executeConfirmAction() {
     setInterval(updateClock, 1000);
     updateClock();
 
+    // ==========================================================================
+    // FUNGSI 6: PRATINJAU (PREVIEW) FOTO PASLON & KONVERSI TO BASE64
+    // ==========================================================================
     function previewImage(event) {
         const file = event.target.files[0];
         if (file) {
@@ -552,6 +623,9 @@ async function executeConfirmAction() {
         }
     }
 
+    // ==========================================================================
+    // FUNGSI 7: MENYIMPAN ATAU MENGUPDATE DATA PASLON KE SPREADSHEET
+    // ==========================================================================
     async function savePaslon(e) {
         e.preventDefault();
         const btn = document.getElementById("btnSimpanPaslon");
@@ -593,6 +667,9 @@ async function executeConfirmAction() {
         }
     }
 
+    // ==========================================================================
+    // FUNGSI 8: MEMUAT DAFTAR PASLON DARI SERVER DAN MENAMPILKAN DI TABEL
+    // ==========================================================================
     async function loadPaslonData() {
         try {
             const res = await fetch(`${SCRIPT_URL}?action=getDashboardEVoting&t=${Date.now()}`, { redirect: 'follow' });
@@ -637,6 +714,9 @@ async function executeConfirmAction() {
         }
     }
 
+    // ==========================================================================
+    // FUNGSI 9: MENGISI FORM EDIT DENGAN DATA PASLON YANG DIPILIH
+    // ==========================================================================
     function editPaslon(no) {
         const p = paslonCache.find(item => item.no.toString() === no.toString());
         if (!p) return;
@@ -661,6 +741,9 @@ async function executeConfirmAction() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
+    // ==========================================================================
+    // FUNGSI 10: MEMBATALKAN MODE EDIT DAN MERESET FORM
+    // ==========================================================================
     function batalEdit() {
         document.getElementById("formPaslon").reset();
         base64Foto = "";
@@ -669,88 +752,108 @@ async function executeConfirmAction() {
         document.getElementById("btnBatalEdit").classList.add("hidden");
     }
 
-   // Fix: Logika Hapus Paslon Spesifik
-function deletePaslon(no) {
-    if (no === undefined || no === null) return;
-    showCustomConfirm(`Apakah Anda yakin ingin menghapus Paslon No. ${no}?`, async function() {
-        try {
-            const response = await fetch(SCRIPT_URL, {
-                method: "POST",
-                headers: { "Content-Type": "text/plain;charset=utf-8" },
-                body: JSON.stringify({ action: "deletePaslon", no: no.toString() }),
-                redirect: "follow"
-            });
-            const result = await response.json();
-            
-            if (result.success) {
-                showCustomAlert(`Paslon No. ${no} berhasil dihapus!`, "SUKSES");
-                loadPaslonData();
-            } else {
-                showCustomAlert(result.message || "Gagal menghapus paslon.", "ERROR");
+    // ==========================================================================
+    // FUNGSI 11: MENGHAPUS PASLON SPESIFIK BERDASARKAN NOMOR URUT
+    // ==========================================================================
+    // Fix: Logika Hapus Paslon Spesifik
+    function deletePaslon(no) {
+        if (no === undefined || no === null) return;
+        showCustomConfirm(`Apakah Anda yakin ingin menghapus Paslon No. ${no}?`, async function() {
+            try {
+                const response = await fetch(SCRIPT_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "text/plain;charset=utf-8" },
+                    body: JSON.stringify({ action: "deletePaslon", no: no.toString() }),
+                    redirect: "follow"
+                });
+                const result = await response.json();
+                
+                if (result.success) {
+                    showCustomAlert(`Paslon No. ${no} berhasil dihapus!`, "SUKSES");
+                    loadPaslonData();
+                } else {
+                    showCustomAlert(result.message || "Gagal menghapus paslon.", "ERROR");
+                }
+            } catch (err) {
+                showCustomAlert("Gagal terhubung ke server untuk menghapus paslon.", "ERROR KONEKSI");
             }
-        } catch (err) {
-            showCustomAlert("Gagal terhubung ke server untuk menghapus paslon.", "ERROR KONEKSI");
-        }
-    });
-}
+        });
+    }
 
-   // Fix: Logika Hapus Semua Paslon
-function confirmDeleteAllPaslon() {
-    showCustomConfirm("PERINGATAN! Apakah Anda yakin ingin MENGHAPUS SELURUH DATA PASLON?", async function() {
-        try {
-            const response = await fetch(SCRIPT_URL, {
-                method: "POST",
-                headers: { "Content-Type": "text/plain;charset=utf-8" },
-                body: JSON.stringify({ action: "deleteAllPaslon" }),
-                redirect: "follow"
-            });
-            const result = await response.json();
-            if (result.success) {
-                showCustomAlert("Seluruh data paslon berhasil dihapus!", "SUKSES");
-                loadPaslonData();
-            } else {
-                showCustomAlert(result.message || "Gagal menghapus data paslon.", "ERROR");
+    // ==========================================================================
+    // FUNGSI 12: MENGHAPUS SELURUH PASLON YANG TERDAFTAR DI DATABASE
+    // ==========================================================================
+    // Fix: Logika Hapus Semua Paslon
+    function confirmDeleteAllPaslon() {
+        showCustomConfirm("PERINGATAN! Apakah Anda yakin ingin MENGHAPUS SELURUH DATA PASLON?", async function() {
+            try {
+                const response = await fetch(SCRIPT_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "text/plain;charset=utf-8" },
+                    body: JSON.stringify({ action: "deleteAllPaslon" }),
+                    redirect: "follow"
+                });
+                const result = await response.json();
+                if (result.success) {
+                    showCustomAlert("Seluruh data paslon berhasil dihapus!", "SUKSES");
+                    loadPaslonData();
+                } else {
+                    showCustomAlert(result.message || "Gagal menghapus data paslon.", "ERROR");
+                }
+            } catch (err) {
+                showCustomAlert("Gagal terhubung ke server untuk menghapus data paslon.", "ERROR KONEKSI");
             }
-        } catch (err) {
-            showCustomAlert("Gagal terhubung ke server untuk menghapus data paslon.", "ERROR KONEKSI");
+        });
+    }
+
+    // ==========================================================================
+    // FUNGSI 13: MEMBUKA MODAL REAL COUNT DAN MENGAKTIFKAN AUTO REFRESH SUARA (3 DETIK)
+    // ==========================================================================
+    // Pastikan interval autoUpdateTimer diatur ke 3000ms (3 detik) agar server Google Apps Script tidak kewalahan
+    function openRealCountModal() {
+        document.getElementById("modalRealCount").style.display = "flex";
+        
+        // Jam modal update tiap 1 detik (waktu lokal, tanpa beban server)
+        updateModalClock();
+        if (!modalClockTimer) {
+            modalClockTimer = setInterval(updateModalClock, 1000);
         }
-    });
-}
-   // Pastikan interval autoUpdateTimer diatur ke 3000ms (3 detik) agar server Google Apps Script tidak kewalahan
-function openRealCountModal() {
-    document.getElementById("modalRealCount").style.display = "flex";
-    
-    // Jam modal update tiap 1 detik (waktu lokal, tanpa beban server)
-    updateModalClock();
-    if (!modalClockTimer) {
-        modalClockTimer = setInterval(updateModalClock, 1000);
+        
+        // Tarik data perolehan suara tiap 3 detik (Sangat aman untuk 3 bilik & 500 pemilih)
+        loadRealCountData();
+        if (!autoUpdateTimer) {
+            autoUpdateTimer = setInterval(loadRealCountData, 3000); 
+        }
     }
-    
-    // Tarik data perolehan suara tiap 3 detik (Sangat aman untuk 3 bilik & 500 pemilih)
-    loadRealCountData();
-    if (!autoUpdateTimer) {
-        autoUpdateTimer = setInterval(loadRealCountData, 3000); 
-    }
-}
-function closeRealCountModal() {
-    document.getElementById("modalRealCount").style.display = "none";
-    if (autoUpdateTimer) {
-        clearInterval(autoUpdateTimer);
-        autoUpdateTimer = null;
-    }
-    if (modalClockTimer) {
-        clearInterval(modalClockTimer);
-        modalClockTimer = null;
-    }
-}
 
-function updateModalClock() {
-    const now = new Date();
-    const timeStr = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + " WIB";
-    const el = document.getElementById("lastUpdateTime");
-    if (el) el.innerText = timeStr;
-}
+    // ==========================================================================
+    // FUNGSI 14: MENUTUP MODAL REAL COUNT DAN MEMATIKAN TIMER REFRESH SUARA
+    // ==========================================================================
+    function closeRealCountModal() {
+        document.getElementById("modalRealCount").style.display = "none";
+        if (autoUpdateTimer) {
+            clearInterval(autoUpdateTimer);
+            autoUpdateTimer = null;
+        }
+        if (modalClockTimer) {
+            clearInterval(modalClockTimer);
+            modalClockTimer = null;
+        }
+    }
 
+    // ==========================================================================
+    // FUNGSI 15: MEMPERBARUI WAKTU TERAKHIR REAL COUNT PADA MODAL
+    // ==========================================================================
+    function updateModalClock() {
+        const now = new Date();
+        const timeStr = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + " WIB";
+        const el = document.getElementById("lastUpdateTime");
+        if (el) el.innerText = timeStr;
+    }
+
+    // ==========================================================================
+    // FUNGSI 16: MENGGAMBAR & MEMPERBARUI GRAFIK DIAGRAM REAL COUNT (CHART.JS)
+    // ==========================================================================
     function renderChart(labels, dataSuara) {
         const ctx = document.getElementById('realCountChart').getContext('2d');
         
@@ -798,57 +901,64 @@ function updateModalClock() {
         }
     }
 
- async function loadRealCountData() {
-    if (isFetchingVote) return;
-    isFetchingVote = true;
+    // ==========================================================================
+    // FUNGSI 17: MENARIK DATA PEROLEHAN SUARA TERBARU DARI SPREADSHEET REAL-TIME
+    // ==========================================================================
+    async function loadRealCountData() {
+        if (isFetchingVote) return;
+        isFetchingVote = true;
 
-    try {
-        // Menggunakan cache-buster t=Date.now() agar data suara baru langsung ditarik dari spreadsheet
-        const res = await fetch(`${SCRIPT_URL}?action=getDashboardEVoting&t=${Date.now()}`, { redirect: 'follow' });
-        const data = await res.json();
+        try {
+            // Menggunakan cache-buster t=Date.now() agar data suara baru langsung ditarik dari spreadsheet
+            const res = await fetch(`${SCRIPT_URL}?action=getDashboardEVoting&t=${Date.now()}`, { redirect: 'follow' });
+            const data = await res.json();
 
-        const tbodyVote = document.getElementById("tableHasilVote");
-        
-        if (data.hasilVote && data.hasilVote.length > 0) {
-            const labels = [];
-            const dataSuara = [];
-            let tableHTML = "";
+            const tbodyVote = document.getElementById("tableHasilVote");
+            
+            if (data.hasilVote && data.hasilVote.length > 0) {
+                const labels = [];
+                const dataSuara = [];
+                let tableHTML = "";
 
-            data.hasilVote.forEach(h => {
-                const formattedLabel = h.no.toString().toUpperCase().includes("PASLON") ? h.no : "PASLON " + h.no;
-                labels.push(formattedLabel);
-                dataSuara.push(h.totalSuara);
+                data.hasilVote.forEach(h => {
+                    const formattedLabel = h.no.toString().toUpperCase().includes("PASLON") ? h.no : "PASLON " + h.no;
+                    labels.push(formattedLabel);
+                    dataSuara.push(h.totalSuara);
 
-                const percentVal = parseFloat(h.persentase) || 0;
+                    const percentVal = parseFloat(h.persentase) || 0;
 
-                tableHTML += `
-                    <tr>
-                        <td><strong>${formattedLabel}</strong></td>
-                        <td><span style="color:#fef08a; font-weight:bold;">${h.nama}</span></td>
-                        <td><span style="font-size:1.1rem; font-weight:bold; color:#38ef7d;">${h.totalSuara}</span> Suara</td>
-                        <td>
-                            <div><strong>${h.persentase}%</strong></div>
-                            <div class="progress-bar-bg">
-                                <div class="progress-bar-fill" style="width: ${percentVal}%;"></div>
-                            </div>
-                        </td>
-                    </tr>`;
-            });
+                    tableHTML += `
+                        <tr>
+                            <td><strong>${formattedLabel}</strong></td>
+                            <td><span style="color:#fef08a; font-weight:bold;">${h.nama}</span></td>
+                            <td><span style="font-size:1.1rem; font-weight:bold; color:#38ef7d;">${h.totalSuara}</span> Suara</td>
+                            <td>
+                                <div><strong>${h.persentase}%</strong></div>
+                                <div class="progress-bar-bg">
+                                    <div class="progress-bar-fill" style="width: ${percentVal}%;"></div>
+                                </div>
+                            </td>
+                        </tr>`;
+                });
 
-            tbodyVote.innerHTML = tableHTML;
-            document.getElementById("totalSuaraMasuk").innerText = (data.totalSuaraMasuk || 0).toLocaleString('id-ID') + " SUARA";
+                tbodyVote.innerHTML = tableHTML;
+                document.getElementById("totalSuaraMasuk").innerText = (data.totalSuaraMasuk || 0).toLocaleString('id-ID') + " SUARA";
 
-            renderChart(labels, dataSuara);
-        } else {
-            tbodyVote.innerHTML = "<tr><td colspan='4' style='text-align:center; color:#cbd5e1;'>Belum ada suara masuk.</td></tr>";
-            renderChart([], []);
+                renderChart(labels, dataSuara);
+            } else {
+                tbodyVote.innerHTML = "<tr><td colspan='4' style='text-align:center; color:#cbd5e1;'>Belum ada suara masuk.</td></tr>";
+                renderChart([], []);
+            }
+        } catch (err) {
+            console.error("Gagal mengambil data perolehan suara:", err);
+        } finally {
+            isFetchingVote = false;
         }
-    } catch (err) {
-        console.error("Gagal mengambil data perolehan suara:", err);
-    } finally {
-        isFetchingVote = false;
     }
-}
+
+    // ==========================================================================
+    // INISIALISASI AWAL LOAD DATA PASLON SAAT HALAMAN SELESAI DIMUAT
+    // ==========================================================================
     loadPaslonData();
 </script>
 
