@@ -33,6 +33,16 @@
            ========================================================================== */
         .container { max-width: 1050px; margin: 0 auto; width: 100%; }
 
+        .admin-login-box {
+            max-width: 400px;
+            margin: 40px auto;
+            background: #1e293b;
+            border: 2px solid #00d2ff;
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            box-shadow: 0 0 25px rgba(0, 210, 255, 0.2);
+        }
         /* ==========================================================================
            3. HEADER & LOGO DASHBOARD
            ========================================================================== */
@@ -372,7 +382,30 @@
 </head>
 <body>
 
-<div class="container">
+<!-- ==========================================================================
+     SECTION 0: FORM LOGIN LAYAR AWAL ADMIN
+     ========================================================================== -->
+<div id="adminLoginSection" class="admin-login-box">
+    <h2 style="color: #00d2ff; margin-bottom: 8px; font-size: 1.2rem;">🔒 LOGIN ADMIN</h2>
+    <p style="color: #cbd5e1; font-size: 11px; margin-bottom: 20px;">E-Voting SMPN 1 Rancah</p>
+    
+    <div class="form-group" style="text-align: left;">
+        <label>USERNAME ADMIN</label>
+        <input type="text" id="adminUser" placeholder="Masukkan Username" autocomplete="off">
+    </div>
+    <div class="form-group" style="text-align: left;">
+        <label>PASSWORD ADMIN</label>
+        <input type="password" id="adminPass" placeholder="Masukkan Password" autocomplete="off">
+    </div>
+    
+    <button class="btn" style="width: 100%; margin-top: 10px;" onclick="prosesLoginAdmin()">🚀 MASUK DASHBOARD</button>
+    <div id="loginAdminError" class="hidden" style="color: #ff4d4d; margin-top: 12px; font-size: 11px; background: #450a0a; padding: 8px; border-radius: 6px; border: 1px solid #ff4d4d;"></div>
+</div>
+
+<!-- ==========================================================================
+     CONTAINER DASHBOARD ADMIN (DI-HIDE SEBELUM LOGIN SUCCESS)
+     ========================================================================== -->
+<div class="container hidden" id="adminDashboardSection">
     <!-- ==========================================================================
          SECTION 1: HEADER UTAMA & LOGO DOKUMENTASI
          ========================================================================== -->
@@ -534,6 +567,10 @@
     // ==========================================================================
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyfb70IU_3Gl0SonFb76SViVA9z-jiwi9Y9T_a0-CWrohAQuRwSizXdObBA2CKfAF4/exec";
     
+    // KREDENSIAL AKUN LOGIN ADMIN (Dapat Anda sesuaikan di sini)
+    const ADMIN_USERNAME = "adminnesara";
+    const ADMIN_PASSWORD = "pemilos123";
+
     let base64Foto = "";
     let autoUpdateTimer = null;
     let modalClockTimer = null;
@@ -541,6 +578,29 @@
     let paslonCache = [];
     let confirmActionHandler = null;
     let isFetchingVote = false;
+
+    // ==========================================================================
+    // FUNGSI UTAMA: LOGIKA VERIFIKASI LOGIN ADMIN
+    // ==========================================================================
+    function prosesLoginAdmin() {
+        const user = document.getElementById("adminUser").value.trim();
+        const pass = document.getElementById("adminPass").value.trim();
+        const errorDiv = document.getElementById("loginAdminError");
+
+        errorDiv.innerText = "";
+        errorDiv.classList.add("hidden");
+
+        if (user === ADMIN_USERNAME && pass === ADMIN_PASSWORD) {
+            document.getElementById("adminLoginSection").classList.add("hidden");
+            document.getElementById("adminDashboardSection").classList.remove("hidden");
+            
+            // Muat data paslon setelah login sukses
+            loadPaslonData();
+        } else {
+            errorDiv.innerText = "Username atau Password salah!";
+            errorDiv.classList.remove("hidden");
+        }
+    }
 
     // ==========================================================================
     // FUNGSI 1: MENAMPILKAN MODAL NOTIFIKASI PESAN INFORMATIF (ALERT)
