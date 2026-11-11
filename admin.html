@@ -720,19 +720,18 @@ function confirmDeleteAllPaslon() {
 function openRealCountModal() {
     document.getElementById("modalRealCount").style.display = "flex";
     
-    // 1. Jalankan jam modal secara instan & halus setiap 1 detik
+    // Jam modal update tiap 1 detik (waktu lokal, tanpa beban server)
     updateModalClock();
     if (!modalClockTimer) {
         modalClockTimer = setInterval(updateModalClock, 1000);
     }
     
-    // 2. Ambil data suara pertama kali & atur refresh server tiap 5 detik agar tidak membebani Apps Script
+    // Tarik data perolehan suara tiap 3 detik (Sangat aman untuk 3 bilik & 500 pemilih)
     loadRealCountData();
     if (!autoUpdateTimer) {
-        autoUpdateTimer = setInterval(loadRealCountData, 5000); // 5 detik ideal agar server Google tidak throttling
+        autoUpdateTimer = setInterval(loadRealCountData, 3000); 
     }
 }
-
 function closeRealCountModal() {
     document.getElementById("modalRealCount").style.display = "none";
     if (autoUpdateTimer) {
